@@ -1,0 +1,68 @@
+.navbar {
+  background: rgba(250, 250, 250, 0.432); /* semi-transparent blue */
+  padding: 1rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px); /* stronger blur for glass effect */
+  -webkit-backdrop-filter: blur(8px); /* for Safari */
+  box-shadow: 0 4px 24px rgba(171, 204, 247, 0.08);
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.nav-logo {
+  color: #474747;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  
+}
+
+.nav-logo:hover {
+  color: #474747;
+  text-decoration: none;
+  transform: scale(1.05);
+}
+
+.nav-menu {
+  
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.nav-link {
+  color: #474747;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  transition: background-color 0.3s;
+}
+
+.nav-link:hover {
+  color: #474747;
+  background-color: #c1d7ec;
+}
+
+.nav-auth {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-register {
+  background-color: #0e63d3;
+  color: white;
+}
+
+.nav-register:hover {
+  background-color: #0c7ee9;
+  color: white;
+}
