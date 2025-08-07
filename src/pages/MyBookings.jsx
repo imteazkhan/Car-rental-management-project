@@ -2,56 +2,26 @@ import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MyBookings.css'
 
-import car_image2 from '../assets/car_image2.png'
-import car_image3 from '../assets/car_image3.png'
-import car_image4 from '../assets/car_image4.png'
-
 function MyBookings() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [bookings, setBookings] = useState([
-    {
-      id: 1,
-      carName: 'Toyota Camry 2023',
-      carImage: car_image2,
-      startDate: '2025-02-15',
-      endDate: '2025-02-18',
-      totalDays: 3,
-      pricePerDay: 45,
-      totalAmount: 135,
-      status: 'confirmed',
-      bookingDate: '2025-01-28'
-    },
-    {
-      id: 2,
-      carName: 'BMW X5 2023',
-      carImage: car_image3,
-      startDate: '2025-03-10',
-      endDate: '2025-03-15',
-      totalDays: 5,
-      pricePerDay: 85,
-      totalAmount: 425,
-      status: 'pending',
-      bookingDate: '2025-01-30'
-    },
-    {
-      id: 3,
-      carName: 'Honda Civic 2023',
-      carImage: car_image4,
-      startDate: '2025-01-20',
-      endDate: '2025-01-22',
-      totalDays: 2,
-      pricePerDay: 40,
-      totalAmount: 80,
-      status: 'completed',
-      bookingDate: '2025-01-15'
-    }
-  ]);
+  const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
     if (location.state && location.state.newBooking) {
-      setBookings(prevBookings => [location.state.newBooking, ...prevBookings]);
-      navigate(location.pathname, { replace: true });
+      const newBooking = location.state.newBooking;
+
+      // Check if booking already exists to prevent duplicates
+      setBookings(prevBookings => {
+        const bookingExists = prevBookings.some(booking => booking.id === newBooking.id);
+        if (!bookingExists) {
+          return [newBooking, ...prevBookings];
+        }
+        return prevBookings;
+      });
+
+      // Clear the location state to prevent re-adding on refresh
+      navigate(location.pathname, { replace: true, state: null });
     }
   }, [location.state, navigate, location.pathname]);
 
@@ -95,7 +65,7 @@ function MyBookings() {
     <div className="my-bookings">
       <div className="container">
         <h1>My Bookings</h1>
-        
+
         {bookings.length === 0 ? (
           <div className="no-bookings">
             <h3>No bookings found</h3>
@@ -108,14 +78,14 @@ function MyBookings() {
               <div key={booking.id} className="booking-card">
                 <div className="booking-header">
                   <div className="booking-id">Booking #{booking.id}</div>
-                  <div 
+                  <div
                     className="booking-status"
                     style={{ backgroundColor: getStatusColor(booking.status) }}
                   >
                     {booking.status.toUpperCase()}
                   </div>
                 </div>
-                
+
                 <div className="booking-content">
                   <div className="car-info">
                     <img src={booking.carImage} alt={booking.carName} />
@@ -124,7 +94,7 @@ function MyBookings() {
                       <p className="booking-date">Booked on: {new Date(booking.bookingDate).toLocaleDateString()}</p>
                     </div>
                   </div>
-                  
+
                   <div className="rental-details">
                     <div className="date-range">
                       <div className="date-item">
@@ -140,7 +110,7 @@ function MyBookings() {
                         <span>{booking.totalDays} days</span>
                       </div>
                     </div>
-                    
+
                     <div className="pricing">
                       <div className="price-breakdown">
                         <span>${booking.pricePerDay}/day × {booking.totalDays} days</span>
@@ -151,10 +121,10 @@ function MyBookings() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="booking-actions">
                   {canModify(booking.status, booking.startDate) && (
-                    <button 
+                    <button
                       className="modify-btn"
                       onClick={() => handleModifyBooking(booking.id)}
                     >
@@ -162,7 +132,7 @@ function MyBookings() {
                     </button>
                   )}
                   {canCancel(booking.status, booking.startDate) && (
-                    <button 
+                    <button
                       className="cancel-btn"
                       onClick={() => handleCancelBooking(booking.id)}
                     >
@@ -186,17 +156,73 @@ function MyBookings() {
       {selectedBooking && (
         <div className="modal-overlay" onClick={() => setSelectedBooking(null)}>
           <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Booking Details</h2>
-            <img src={selectedBooking.carImage} alt={selectedBooking.carName} style={{maxWidth: '100%', borderRadius: '8px'}} />
-            <h3>{selectedBooking.carName}</h3>
-            <p><strong>Status:</strong> {selectedBooking.status}</p>
-            <p><strong>Booked on:</strong> {new Date(selectedBooking.bookingDate).toLocaleDateString()}</p>
-            <p><strong>Pick-up:</strong> {new Date(selectedBooking.startDate).toLocaleDateString()}</p>
-            <p><strong>Return:</strong> {new Date(selectedBooking.endDate).toLocaleDateString()}</p>
-            <p><strong>Total Days:</strong> {selectedBooking.totalDays}</p>
-            <p><strong>Price per Day:</strong> ${selectedBooking.pricePerDay}</p>
-            <p><strong>Total Amount:</strong> ${selectedBooking.totalAmount}</p>
-            <button onClick={() => setSelectedBooking(null)} className="close-modal-btn">Close</button>
+            <div className="modal-header">
+              <h2>Booking Details</h2>
+              <button
+                className="close-modal-btn"
+                onClick={() => setSelectedBooking(null)}
+              >
+                ×
+              </button>
+            </div>
+
+            <div className="modal-body">
+              <div className="modal-car-image">
+                <img
+                  src={selectedBooking.carImage}
+                  alt={selectedBooking.carName}
+                />
+              </div>
+
+              <div className="modal-info">
+                <h3>{selectedBooking.carName}</h3>
+                <div className="booking-status-badge" style={{ backgroundColor: getStatusColor(selectedBooking.status) }}>
+                  {selectedBooking.status.toUpperCase()}
+                </div>
+              </div>
+
+              <div className="modal-details-grid">
+                <div className="detail-item">
+                  <span className="detail-label">Booking ID:</span>
+                  <span className="detail-value">#{selectedBooking.id}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Booked on:</span>
+                  <span className="detail-value">{new Date(selectedBooking.bookingDate).toLocaleDateString()}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Pick-up Date:</span>
+                  <span className="detail-value">{new Date(selectedBooking.startDate).toLocaleDateString()}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Return Date:</span>
+                  <span className="detail-value">{new Date(selectedBooking.endDate).toLocaleDateString()}</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Total Days:</span>
+                  <span className="detail-value">{selectedBooking.totalDays} days</span>
+                </div>
+                <div className="detail-item">
+                  <span className="detail-label">Price per Day:</span>
+                  <span className="detail-value">${selectedBooking.pricePerDay}</span>
+                </div>
+                <div className="detail-item total-amount">
+                  <span className="detail-label">Total Amount:</span>
+                  <span className="detail-value">${selectedBooking.totalAmount}</span>
+                </div>
+              </div>
+
+              {selectedBooking.features && (
+                <div className="modal-features">
+                  <h4>Car Features:</h4>
+                  <div className="features-list">
+                    {selectedBooking.features.map((feature, index) => (
+                      <span key={index} className="feature-tag">{feature}</span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

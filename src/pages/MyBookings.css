@@ -1,41 +1,221 @@
-/* Add to: d:\IDB-WDPF\PHP\Xampp\htdocs\Imteaz\React\my-app\src\pages\MyBookings.css */
+/* Modal Styles */
 .modal-overlay {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
+  animation: fadeIn 0.3s ease-out;
 }
+
 .modal-content {
   background: #fff;
-  padding: 2rem;
   border-radius: 1rem;
-  max-width: 400px;
+  max-width: 600px;
   width: 90%;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   position: relative;
+  animation: slideIn 0.3s ease-out;
 }
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid #eee;
+  background: #f8f9fa;
+  border-radius: 1rem 1rem 0 0;
+}
+
+.modal-header h2 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.5rem;
+}
+
 .close-modal-btn {
-  margin-top: 1rem;
-  background: #0e63d3;
-  color: #fff;
+  background: none;
   border: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 0.5rem;
+  font-size: 2rem;
+  color: #666;
   cursor: pointer;
-}.my-bookings {
+  padding: 10px;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 30%;
+  transition: all 0.3s;
+}
+
+.close-modal-btn:hover {
+  background: #e74c3c;
+  color: white;
+}
+
+.modal-body {
+  padding: 2rem;
+}
+
+.modal-car-image {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.modal-car-image img {
+  max-width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.modal-info {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.modal-info h3 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+  font-size: 1.4rem;
+}
+
+.booking-status-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: white;
+  text-transform: uppercase;
+}
+
+.modal-details-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.detail-item.total-amount {
+  grid-column: 1 / -1;
+  background: #e8f5e8;
+  border-left-color: #27ae60;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.detail-label {
+  color: #666;
+  font-weight: 500;
+}
+
+.detail-value {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.modal-features {
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.modal-features h4 {
+  margin: 0 0 1rem 0;
+  color: #2c3e50;
+}
+
+.features-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.feature-tag {
+  background: #3498db;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.9rem;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    margin: 1rem;
+  }
+
+  .modal-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .modal-header {
+    padding: 1rem 1.5rem;
+  }
+
+  .modal-body {
+    padding: 1.5rem;
+  }
+}
+
+.my-bookings {
   padding: 2rem 0;
   min-height: 100vh;
-  background-color: #f8f9fa;
+  background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('../assets/road1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
 .my-bookings h1 {
   text-align: center;
   margin-bottom: 2rem;
-  color: #2c3e50;
+  color: white;
   font-size: 2.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  font-weight: bold;
 }
 
 /* No Bookings */
@@ -44,7 +224,7 @@
   background: white;
   padding: 3rem;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .no-bookings h3 {
@@ -81,7 +261,7 @@
 .booking-card {
   background: white;
   border-radius: 10px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.3s;
 }
@@ -240,17 +420,17 @@
     grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .car-info {
     flex-direction: column;
     align-items: center;
     text-align: center;
   }
-  
+
   .booking-actions {
     flex-direction: column;
   }
-  
+
   .booking-actions button {
     width: 100%;
   }

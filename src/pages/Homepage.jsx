@@ -89,7 +89,12 @@ function Homepage() {
           <h2>Featured Cars</h2>
           <div class="cars-grid">
             {featuredCars.map(car => (
-              <div key={car.id} class="car-card">
+              <div 
+                key={car.id} 
+                class="car-card"
+                onClick={() => navigate(`/cars/${car.id}`)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div class="car-image-wrapper">
                   <img src={car.image} alt={car.name} class="car-image" />
                 </div>
@@ -101,12 +106,6 @@ function Homepage() {
                       <span key={index} class="feature">{feature}</span>
                     ))}
                   </div>
-                  <button
-                    class="book-btn"
-                    onClick={() => navigate(`/cars/${car.id}`)}
-                  >
-                    Book Now
-                  </button>
                 </div>
               </div>
             ))}

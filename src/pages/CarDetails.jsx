@@ -85,7 +85,11 @@ function CarDetails() {
       pricePerDay: car.price,
       totalAmount: car.price * 5,
       status: 'confirmed',
-      bookingDate: new Date().toISOString().split('T')[0]
+      bookingDate: new Date().toISOString().split('T')[0],
+      features: car.features,
+      transmission: car.transmission,
+      type: car.type,
+      rating: car.rating
     };
 
     navigate('/my-bookings', { state: { newBooking } });
