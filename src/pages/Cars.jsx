@@ -1,13 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { allCars } from '../data/carsData';
 import './Cars.css'
-
-import car_image1 from '../assets/car_image1.png'
-import car_image2 from '../assets/car_image2.png'
-import car_image3 from '../assets/car_image3.png'
-import car_image4 from '../assets/car_image4.png'
-// import car_image1 from '../assets/car_image1.png'
-// import car_image2 from '../assets/car_image2.png'
 
 function Cars() {
   const navigate = useNavigate();
@@ -18,68 +12,7 @@ function Cars() {
     sortBy: 'price-low'
   })
 
-  const allCars = [
-    {
-      id: 1,
-      name: 'Toyota Camry 2023',
-      type: 'sedan',
-      price: 45,
-      transmission: 'automatic',
-      image: car_image1,
-      features: ['AC', '5 Seats', 'Bluetooth', 'GPS'],
-      rating: 4.8
-    },
-    {
-      id: 2,
-      name: 'Honda Civic 2023',
-      type: 'sedan',
-      price: 40,
-      transmission: 'manual',
-      image: car_image2,
-      features: ['AC', '5 Seats', 'GPS', 'USB'],
-      rating: 4.6
-    },
-    {
-      id: 3,
-      name: 'BMW X5 2023',
-      type: 'suv',
-      price: 85,
-      transmission: 'automatic',
-      image: car_image3,
-      features: ['Leather', '7 Seats', 'Premium', 'Sunroof'],
-      rating: 4.9
-    },
-    {
-      id: 4,
-      name: 'Ford Mustang 2023',
-      type: 'sports',
-      price: 75,
-      transmission: 'manual',
-      image: car_image4,
-      features: ['Sports', '2 Seats', 'Premium', 'Convertible'],
-      rating: 4.7
-    },
-    {
-      id: 5,
-      name: 'Nissan Altima 2023',
-      type: 'sedan',
-      price: 38,
-      transmission: 'automatic',
-      image: car_image1,
-      features: ['AC', '5 Seats', 'Bluetooth', 'Backup Camera'],
-      rating: 4.5
-    },
-    {
-      id: 6,
-      name: 'Jeep Wrangler 2023',
-      type: 'suv',
-      price: 65,
-      transmission: 'manual',
-      image: car_image2,
-      features: ['4WD', '5 Seats', 'Off-road', 'Removable Top'],
-      rating: 4.4
-    }
-  ]
+
 
   const handleFilterChange = (filterType, value) => {
     setFilters(prev => ({
@@ -110,16 +43,16 @@ function Cars() {
   })
 
   const handleBooking = (carId) => {
-    navigate(`/cars/${carId}`);
+    navigate(`/cardetails/${carId}`);
   }
 
   return (
     <div className="cars-page">
       <div className="container">
-        <h1>Available Cars</h1>
+        <h1 data-aos="fade-down">Available Cars</h1>
         
         {/* Filters */}
-        <div className="filters">
+        <div className="filters" data-aos="fade-up" data-aos-delay="200">
           <div className="filter-group">
             <label>Price Range:</label>
             <select 
@@ -174,14 +107,21 @@ function Cars() {
         </div>
 
         {/* Results Count */}
-        <div className="results-info">
+        <div className="results-info" data-aos="fade-right">
           <p>Showing {sortedCars.length} of {allCars.length} cars</p>
         </div>
 
         {/* Cars Grid */}
         <div className="cars-grid">
-          {sortedCars.map(car => (
-            <div key={car.id} className="car-card" onClick={() => handleBooking(car.id)}>
+          {sortedCars.map((car, index) => (
+            <div 
+              key={car.id} 
+              className="car-card" 
+              onClick={() => handleBooking(car.id)} 
+              data-aos="flip-left" 
+              data-aos-delay={index * 100}
+              style={{ cursor: 'pointer' }}
+            >
               <img src={car.image} alt={car.name} />
               <div className="car-info">
                 <h3>{car.name}</h3>
@@ -198,18 +138,16 @@ function Cars() {
                 <div className="transmission">
                   <span>{car.transmission.charAt(0).toUpperCase() + car.transmission.slice(1)}</span>
                 </div>
-                <button 
-                  className="book-btn"
-                >
-                  Book Now
-                </button>
+                <div className="view-details">
+                  <span>Click to view details</span>
+                </div>
               </div>
             </div>
           ))}
         </div>
 
         {sortedCars.length === 0 && (
-          <div className="no-results">
+          <div className="no-results" data-aos="fade-up">
             <p>No cars match your current filters. Try adjusting your search criteria.</p>
           </div>
         )}

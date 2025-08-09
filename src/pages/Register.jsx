@@ -102,13 +102,13 @@ function Register() {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <div className="auth-card register-card">
-          <div className="auth-header">
+        <div className="auth-card register-card" data-aos="zoom-in">
+          <div className="auth-header" data-aos="fade-down" data-aos-delay="200">
             <h1>Create Account</h1>
             <p>Join Imteaz Rental and start your journey</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="auth-form">
+          <form onSubmit={handleSubmit} className="auth-form" data-aos="fade-up" data-aos-delay="400">
             <div className="form-row">
               <div className="form-group">
                 <label htmlFor="firstName">First Name</label>

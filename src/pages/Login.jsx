@@ -59,13 +59,13 @@ function Login() {
   return (
     <div className="auth-page">
       <div className="auth-container">
-        <div className="auth-card">
-          <div className="auth-header">
+        <div className="auth-card" data-aos="zoom-in">
+          <div className="auth-header" data-aos="fade-down" data-aos-delay="200">
             <h1>Welcome Back</h1>
             <p>Sign in to your Imteaz Rental account</p>
           </div>
 
-          <form onSubmit={handleSubmit} className="auth-form">
+          <form onSubmit={handleSubmit} className="auth-form" data-aos="fade-up" data-aos-delay="400">
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -118,7 +118,7 @@ function Login() {
             <span>or</span>
           </div>
 
-          <div className="social-login">
+          <div className="social-login" data-aos="fade-up" data-aos-delay="600">
             <button className="social-btn google-btn">
               <span>Continue with Google</span>
             </button>
@@ -127,7 +127,7 @@ function Login() {
             </button>
           </div>
 
-          <div className="auth-footer">
+          <div className="auth-footer" data-aos="fade-up" data-aos-delay="800">
             <p>
               Don't have an account?{' '}
               <Link to="/register" className="auth-link">

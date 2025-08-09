@@ -1,40 +1,12 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import mainCarImg from '../assets/main_car.png'
-
-import car_image2 from '../assets/car_image2.png'
-import car_image3 from '../assets/car_image3.png'
-import car_image4 from '../assets/car_image4.png'
-
-// ...existing code...
+import { useNavigate } from 'react-router-dom'
+import { featuredCars } from '../data/carsData'
 import './Homepage.css'
 
 function Homepage() {
   const [email, setEmail] = useState('')
 
-  const featuredCars = [
-    {
-      id: 1,
-      name: 'Toyota Camry 2023',
-      price: 45,
-      image: car_image2,
-      features: ['Automatic', 'AC', '5 Seats', 'Bluetooth']
-    },
-    {
-      id: 2,
-      name: 'Honda Civic 2023',
-      price: 40,
-      image: car_image3,
-      features: ['Manual', 'AC', '5 Seats', 'GPS']
-    },
-    {
-      id: 3,
-      name: 'BMW X5 2023',
-      price: 85,
-      image: car_image4,
-      features: ['Automatic', 'Leather', '7 Seats', 'Premium']
-    }
-  ]
+
 
   const testimonials = [
     {
@@ -69,12 +41,12 @@ function Homepage() {
     <div class="homepage">
       {/* Hero Section */}
       <section class="hero">
-        <div class="hero-content-container">
+        <div class="hero-content-container" data-aos="fade-right">
           <h2>Find Your Car</h2>
           <p>Discover amazing vehicles at unbeatable prices. Book now and drive away with confidence.</p>
           <button onClick={() => navigate('/cars')} class="cta-button">Browse Cars</button>
         </div>
-        <div class="hero-image-container">
+        <div class="hero-image-container" data-aos="fade-left">
           {/* <img
             class="hero-image"
             src={mainCarImg}
@@ -86,14 +58,16 @@ function Homepage() {
       {/* Featured Cars */}
       <section class="featured-cars">
         <div class="container">
-          <h2>Featured Cars</h2>
+          <h2 data-aos="fade-up">Featured Cars</h2>
           <div class="cars-grid">
-            {featuredCars.map(car => (
-              <div 
-                key={car.id} 
+            {featuredCars.map((car, index) => (
+              <div
+                key={car.id}
                 class="car-card"
-                onClick={() => navigate(`/cars/${car.id}`)}
+                onClick={() => navigate('/cars')}
                 style={{ cursor: 'pointer' }}
+                data-aos="zoom-in"
+                data-aos-delay={index * 200}
               >
                 <div class="car-image-wrapper">
                   <img src={car.image} alt={car.name} class="car-image" />
@@ -116,10 +90,10 @@ function Homepage() {
       {/* Testimonials */}
       <section class="testimonials">
         <div class="container">
-          <h2>What Our Customers Say</h2>
+          <h2 data-aos="fade-up">What Our Customers Say</h2>
           <div class="testimonials-grid">
-            {testimonials.map(testimonial => (
-              <div key={testimonial.id} class="testimonial-card">
+            {testimonials.map((testimonial, index) => (
+              <div key={testimonial.id} class="testimonial-card" data-aos="fade-up" data-aos-delay={index * 150}>
                 <div class="stars">
                   {'★'.repeat(testimonial.rating)}
                 </div>
@@ -133,7 +107,7 @@ function Homepage() {
 
       {/* Email Subscription */}
       <section class="newsletter">
-        <div class="container">
+        <div class="container" data-aos="fade-up">
           <h2>Stay Updated</h2>
           <p>Subscribe to get the latest deals and offers</p>
           <form onSubmit={handleSubscribe} class="newsletter-form">

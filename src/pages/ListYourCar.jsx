@@ -97,12 +97,12 @@ function ListYourCar() {
   return (
     <div className="list-your-car">
       <div className="container">
-        <h1>List Your Car</h1>
-        <p className="subtitle">Share your car and earn money when you're not using it</p>
+        <h1 data-aos="fade-down">List Your Car</h1>
+        <p className="subtitle" data-aos="fade-up" data-aos-delay="200">Share your car and earn money when you're not using it</p>
         
         <form onSubmit={handleSubmit} className="car-form">
           {/* Car Details Section */}
-          <div className="form-section">
+          <div className="form-section" data-aos="fade-up" data-aos-delay="300">
             <h2>Car Details</h2>
             <div className="form-grid">
               <div className="form-group">
@@ -175,7 +175,7 @@ function ListYourCar() {
           </div>
 
           {/* Car Specifications */}
-          <div className="form-section">
+          <div className="form-section" data-aos="fade-up" data-aos-delay="400">
             <h2>Specifications</h2>
             <div className="form-grid">
               <div className="form-group">
@@ -240,7 +240,7 @@ function ListYourCar() {
           </div>
 
           {/* Features */}
-          <div className="form-section">
+          <div className="form-section" data-aos="fade-up" data-aos-delay="500">
             <h2>Features</h2>
             <div className="features-grid">
               {availableFeatures.map(feature => (
@@ -423,7 +423,7 @@ function ListYourCar() {
             )}
           </div>
 
-          <div className="form-actions">
+          <div className="form-actions" data-aos="zoom-in" data-aos-delay="800">
             <button type="submit" className="submit-btn">
               Submit Car for Review
             </button>

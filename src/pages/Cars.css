@@ -66,6 +66,7 @@
   overflow: hidden;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
   transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
 }
 
 .car-card:hover {
@@ -138,21 +139,19 @@
   font-style: italic;
 }
 
-.book-btn {
-  width: 100%;
-  background-color: #e74c3c;
+.view-details {
+  text-align: center;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #0e63d3, #3fa7ff);
   color: white;
-  border: none;
-  padding: 1rem;
   border-radius: 5px;
-  cursor: pointer;
-  font-size: 1.1rem;
-  font-weight: bold;
-  transition: background-color 0.3s;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-.book-btn:hover {
-  background-color: #c0392b;
+.car-card:hover .view-details {
+  background: linear-gradient(135deg, #3fa7ff, #0e63d3);
+  transform: scale(1.02);
 }
 
 /* No Results */

@@ -64,18 +64,18 @@ function MyBookings() {
   return (
     <div className="my-bookings">
       <div className="container">
-        <h1>My Bookings</h1>
+        <h1 data-aos="fade-down">My Bookings</h1>
 
         {bookings.length === 0 ? (
-          <div className="no-bookings">
+          <div className="no-bookings" data-aos="fade-up">
             <h3>No bookings found</h3>
             <p>You haven't made any bookings yet.</p>
             <a href="/cars" className="browse-cars-btn">Browse Cars</a>
           </div>
         ) : (
           <div className="bookings-list">
-            {bookings.map(booking => (
-              <div key={booking.id} className="booking-card">
+            {bookings.map((booking, index) => (
+              <div key={booking.id} className="booking-card" data-aos="fade-up" data-aos-delay={index * 100}>
                 <div className="booking-header">
                   <div className="booking-id">Booking #{booking.id}</div>
                   <div
