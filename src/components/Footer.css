@@ -40,7 +40,8 @@
 }
 
 .footer-section a:hover {
-  color: #3498db;
+  color: #e1fa00;
+  transition: color 0.3ms ;
 }
 
 .footer-bottom {

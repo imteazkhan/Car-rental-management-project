@@ -23,7 +23,7 @@ function Register() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -52,17 +52,20 @@ function Register() {
 
     if (!formData.phone) {
       newErrors.phone = 'Phone number is required'
-    } else if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone) && !/^\d{10}$/.test(formData.phone.replace(/\D/g, ''))) {
+    } else if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone) && !/^\d{11}$/.test(formData.phone.replace(/\D/g, ''))) {
       newErrors.phone = 'Phone number is invalid'
     }
 
     if (!formData.password) {
       newErrors.password = 'Password is required'
-    } else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
-    } else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, and number'
     }
+    else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters'
+    }
+    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(formData.password)) {
+      newErrors.password = 'Password must contain uppercase, lowercase, number, and special character'
+    }
+
 
     if (!formData.confirmPassword) {
       newErrors.confirmPassword = 'Please confirm your password'
@@ -91,7 +94,7 @@ function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     if (validateForm()) {
       console.log('Registration attempt:', formData)
       alert('Registration successful! Welcome to Imteaz Rental.')
@@ -161,7 +164,7 @@ function Register() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="(555) 123-4567"
+                placeholder="+880 1234-567890"
                 className={errors.phone ? 'error' : ''}
               />
               {errors.phone && <span className="error-message">{errors.phone}</span>}

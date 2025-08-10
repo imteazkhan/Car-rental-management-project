@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
@@ -14,6 +14,17 @@ import CarDetails from './pages/CarDetails'
 
 import './App.css'
 
+// Component to handle scroll to top on route change
+function ScrollToTop() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+}
+
 function App() {
   useEffect(() => {
     AOS.init({
@@ -26,6 +37,7 @@ function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="App">
         <Navbar />
         <main>

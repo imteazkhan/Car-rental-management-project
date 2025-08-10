@@ -1,11 +1,11 @@
 .navbar {
-  background: rgba(250, 250, 250, 0.432); /* semi-transparent blue */
+  background: rgba(250, 250, 250, 0.432);
   padding: 1rem 0;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(8px); /* stronger blur for glass effect */
-  -webkit-backdrop-filter: blur(8px); /* for Safari */
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   box-shadow: 0 4px 24px rgba(171, 204, 247, 0.08);
 }
 
@@ -16,6 +16,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 0 2rem;
+  position: relative;
 }
 
 .nav-logo {
@@ -23,7 +24,7 @@
   font-size: 1.5rem;
   font-weight: bold;
   text-decoration: none;
-  
+  transition: transform 0.3s ease;
 }
 
 .nav-logo:hover {
@@ -33,7 +34,6 @@
 }
 
 .nav-menu {
-  
   display: flex;
   align-items: center;
   gap: 2rem;
@@ -65,4 +65,105 @@
 .nav-register:hover {
   background-color: #0c7ee9;
   color: white;
+}
+
+/* Hamburger Menu Styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  z-index: 101;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background-color: #474747;
+  margin: 3px 0;
+  transition: 0.3s;
+  border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+  transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+  transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Mobile Responsive Styles */
+@media screen and (max-width: 768px) {
+  .nav-container {
+    padding: 0 1rem;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .nav-menu {
+    position: fixed;
+    left: -100%;
+    top: 70px;
+    flex-direction: column;
+    background: rgba(250, 250, 250, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
+    text-align: center;
+    transition: 0.3s;
+    box-shadow: 0 10px 27px rgba(0, 0, 0, 0.05);
+    padding: 2rem 0;
+    gap: 0;
+  }
+
+  .nav-menu.active {
+    left: 0;
+  }
+
+  .nav-link {
+    padding: 1rem;
+    display: block;
+    margin: 0.5rem 0;
+    border-radius: 8px;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nav-auth {
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .nav-auth .nav-link {
+    width: 100%;
+    margin: 0.25rem 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .nav-container {
+    padding: 0 0.5rem;
+  }
+
+  .nav-logo {
+    font-size: 1.3rem;
+  }
+
+  .nav-menu {
+    top: 65px;
+  }
 }

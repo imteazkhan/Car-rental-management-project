@@ -17,7 +17,7 @@ function Login() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-    
+
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors(prev => ({
@@ -48,7 +48,7 @@ function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    
+
     if (validateForm()) {
       console.log('Login attempt:', formData)
       alert('Login successful! Welcome back.')
