@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import { 
   Search, 
   Filter, 
@@ -12,8 +14,10 @@ import {
   Eye,
   Heart
 } from 'lucide-react';
+import API_URL from '../../config';
 
 const CarBrowsing = () => {
+  const navigate = useNavigate();
   const [cars, setCars] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -30,15 +34,11 @@ const CarBrowsing = () => {
     end_date: '',
     pickup_location: '',
     dropoff_location: '',
-    notes: ''
+    notes: '',
+    payment_method: 'credit_card'
   });
 
-  useEffect(() => {
-    fetchCars();
-    fetchCategories();
-  }, [currentPage, searchTerm, filterCategory, filterPriceRange, filterFuelType]);
-
-  const fetchCars = async () => {
+  const fetchCars = useCallback(async () => {
     try {
       const params = new URLSearchParams({
         page: currentPage,
@@ -55,7 +55,7 @@ const CarBrowsing = () => {
         if (max) params.append('max_price', max);
       }
 
-      const response = await fetch(`/API/cars?${params}`);
+      const response = await fetch(`${API_URL}/cars.php?${params}`);
       if (response.ok) {
         const data = await response.json();
         setCars(data.data.cars);
@@ -66,11 +66,11 @@ const CarBrowsing = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [currentPage, searchTerm, filterCategory, filterPriceRange, filterFuelType]);
 
-  const fetchCategories = async () => {
+  const fetchCategories = useCallback(async () => {
     try {
-      const response = await fetch('/API/cars?action=categories');
+      const response = await fetch(`${API_URL}/cars.php?action=categories`);
       if (response.ok) {
         const data = await response.json();
         setCategories(data.data);
@@ -78,27 +78,49 @@ const CarBrowsing = () => {
     } catch (error) {
       console.error('Error fetching categories:', error);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    fetchCars();
+    fetchCategories();
+  }, [fetchCars, fetchCategories]);
 
   const handleBooking = async (e) => {
     e.preventDefault();
+
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    const token = localStorage.getItem('token');
     
+    if (!user.id || !token) {
+      alert('You must be logged in to book a car.');
+      navigate('/login');
+      return;
+    }
+
+    // Calculate total amount
+    const startDate = new Date(bookingData.start_date);
+    const endDate = new Date(bookingData.end_date);
+    const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+    const totalAmount = days * selectedCar.daily_rate;
+
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/API/bookings', {
-        method: 'POST',
+      const response = await axios.post(`${API_URL}/bookings.php`, {
+        car_id: selectedCar.id,
+        start_date: bookingData.start_date,
+        end_date: bookingData.end_date,
+        pickup_location: bookingData.pickup_location,
+        dropoff_location: bookingData.dropoff_location,
+        notes: bookingData.notes,
+        payment_method: bookingData.payment_method,
+        total_amount: totalAmount
+      }, {
         headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          car_id: selectedCar.id,
-          ...bookingData
-        })
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
       });
 
-      if (response.ok) {
-        const data = await response.json();
+      if (response.data.success) {
         alert('Booking created successfully!');
         setShowBookingModal(false);
         setBookingData({
@@ -106,15 +128,40 @@ const CarBrowsing = () => {
           end_date: '',
           pickup_location: '',
           dropoff_location: '',
-          notes: ''
+          notes: '',
+          payment_method: 'credit_card'
+        });
+        
+        // Redirect to MyBookings page to show the new booking
+        navigate('/my-bookings', {
+          state: {
+            newBooking: {
+              id: response.data.data.booking_id,
+              car_name: `${selectedCar.make} ${selectedCar.model}`,
+              car_image: selectedCar.image_url,
+              start_date: bookingData.start_date,
+              end_date: bookingData.end_date,
+              total_amount: totalAmount,
+              total_days: days,
+              price_per_day: selectedCar.daily_rate,
+              status: 'pending',
+              booking_date: new Date().toISOString(),
+              pickup_location: bookingData.pickup_location,
+              dropoff_location: bookingData.dropoff_location,
+              notes: bookingData.notes
+            }
+          }
         });
       } else {
-        const error = await response.json();
-        alert(error.error || 'Booking failed');
+        alert(response.data.message || 'Booking failed');
       }
     } catch (error) {
       console.error('Error creating booking:', error);
-      alert('An error occurred while creating the booking');
+      if (error.response?.data?.message) {
+        alert(error.response.data.message);
+      } else {
+        alert('An error occurred while creating the booking. Please try again.');
+      }
     }
   };
 
@@ -197,6 +244,73 @@ const CarBrowsing = () => {
               />
             </div>
 
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Payment Method</label>
+              <select
+                value={bookingData.payment_method}
+                onChange={(e) => setBookingData(prev => ({ ...prev, payment_method: e.target.value }))}
+                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                required
+              >
+                <option value="credit_card">Credit Card</option>
+                <option value="debit_card">Debit Card</option>
+                <option value="paypal">PayPal</option>
+                <option value="cash">Cash on Pickup</option>
+                <option value="bank_transfer">Bank Transfer</option>
+              </select>
+            </div>
+
+            {bookingData.payment_method !== 'cash' && (
+              <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+                <div className="flex items-center">
+                  <div className="flex-shrink-0">
+                    <svg className="h-5 w-5 text-blue-400" viewBox="0 0 20 20" fill="currentColor">
+                      <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                    </svg>
+                  </div>
+                  <div className="ml-3">
+                    <p className="text-sm text-blue-700">
+                      {bookingData.payment_method === 'credit_card' && 'You will be redirected to secure payment gateway to complete your booking.'}
+                      {bookingData.payment_method === 'debit_card' && 'You will be redirected to secure payment gateway to complete your booking.'}
+                      {bookingData.payment_method === 'paypal' && 'You will be redirected to PayPal to complete your payment.'}
+                      {bookingData.payment_method === 'bank_transfer' && 'Bank transfer details will be provided after booking confirmation.'}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Price Summary */}
+            {bookingData.start_date && bookingData.end_date && (
+              <div className="bg-gray-50 rounded-lg p-4">
+                <h4 className="font-medium text-gray-900 mb-2">Price Summary</h4>
+                {(() => {
+                  const startDate = new Date(bookingData.start_date);
+                  const endDate = new Date(bookingData.end_date);
+                  const days = Math.ceil((endDate - startDate) / (1000 * 60 * 60 * 24));
+                  const totalAmount = days * selectedCar.daily_rate;
+                  
+                  return (
+                    <div className="space-y-2">
+                      <div className="flex justify-between text-sm">
+                        <span>${selectedCar.daily_rate}/day × {days} day{days > 1 ? 's' : ''}</span>
+                        <span>${totalAmount}</span>
+                      </div>
+                      <div className="flex justify-between text-sm">
+                        <span>Service fee</span>
+                        <span>$0</span>
+                      </div>
+                      <hr className="my-2" />
+                      <div className="flex justify-between font-medium">
+                        <span>Total</span>
+                        <span>${totalAmount}</span>
+                      </div>
+                    </div>
+                  );
+                })()}
+              </div>
+            )}
+
             <div className="flex justify-end space-x-4">
               <button
                 type="button"
@@ -207,9 +321,12 @@ const CarBrowsing = () => {
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 flex items-center"
               >
-                Book Now
+                <svg className="h-4 w-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                </svg>
+                Book & Pay
               </button>
             </div>
           </form>
@@ -384,8 +501,13 @@ const CarBrowsing = () => {
                   </div>
                   <button
                     onClick={() => {
-                      setSelectedCar(car);
-                      setShowBookingModal(true);
+                      const user = localStorage.getItem('user');
+                      if (user) {
+                        setSelectedCar(car);
+                        setShowBookingModal(true);
+                      } else {
+                        navigate('/login');
+                      }
                     }}
                     className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium flex items-center"
                   >

@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Calendar, Car, Clock, DollarSign, MapPin, Star, X } from 'lucide-react';
+import API_URL from '../../config';
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -8,18 +9,14 @@ const MyBookings = () => {
   const [selectedBooking, setSelectedBooking] = useState(null);
   const [showDetailsModal, setShowDetailsModal] = useState(false);
 
-  useEffect(() => {
-    fetchBookings();
-  }, [filterStatus]);
-
-  const fetchBookings = async () => {
+  const fetchBookings = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const params = new URLSearchParams({
         ...(filterStatus && { status: filterStatus })
       });
 
-      const response = await fetch(`/API/bookings?${params}`, {
+      const response = await fetch(`${API_URL}/bookings?${params}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -35,14 +32,18 @@ const MyBookings = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filterStatus]);
+
+  useEffect(() => {
+    fetchBookings();
+  }, [fetchBookings]);
 
   const cancelBooking = async (bookingId) => {
     if (!confirm('Are you sure you want to cancel this booking?')) return;
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/API/bookings?id=${bookingId}&action=cancel`, {
+      const response = await fetch(`${API_URL}/bookings?id=${bookingId}&action=cancel`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -1,8 +1,13 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import API_URL from '../config';
 import './Auth.css'
+import { useAuth } from '../context/AuthContext'
 
 function Register() {
+  const navigate = useNavigate()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -16,6 +21,7 @@ function Register() {
   })
 
   const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -23,8 +29,7 @@ function Register() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-
-    // Clear error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
@@ -35,73 +40,67 @@ function Register() {
 
   const validateForm = () => {
     const newErrors = {}
-
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required'
-    }
-
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required'
-    }
-
+    if (!formData.firstName) newErrors.firstName = 'First name is required'
+    if (!formData.lastName) newErrors.lastName = 'Last name is required'
     if (!formData.email) {
       newErrors.email = 'Email is required'
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = 'Email is invalid'
     }
-
-    if (!formData.phone) {
-      newErrors.phone = 'Phone number is required'
-    } else if (!/^\(\d{3}\) \d{3}-\d{4}$/.test(formData.phone) && !/^\d{11}$/.test(formData.phone.replace(/\D/g, ''))) {
-      newErrors.phone = 'Phone number is invalid'
-    }
-
+    if (!formData.phone) newErrors.phone = 'Phone number is required'
+    if (!formData.dateOfBirth) newErrors.dateOfBirth = 'Date of birth is required'
     if (!formData.password) {
       newErrors.password = 'Password is required'
+    } else if (formData.password.length < 8) {
+      newErrors.password = 'Password must be at least 8 characters long'
     }
-    else if (formData.password.length < 8) {
-      newErrors.password = 'Password must be at least 8 characters'
-    }
-    else if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/.test(formData.password)) {
-      newErrors.password = 'Password must contain uppercase, lowercase, number, and special character'
-    }
-
-
-    if (!formData.confirmPassword) {
-      newErrors.confirmPassword = 'Please confirm your password'
-    } else if (formData.password !== formData.confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       newErrors.confirmPassword = 'Passwords do not match'
     }
-
-    if (!formData.dateOfBirth) {
-      newErrors.dateOfBirth = 'Date of birth is required'
-    } else {
-      const today = new Date()
-      const birthDate = new Date(formData.dateOfBirth)
-      const age = today.getFullYear() - birthDate.getFullYear()
-      if (age < 18) {
-        newErrors.dateOfBirth = 'You must be at least 18 years old'
-      }
-    }
-
     if (!formData.agreeToTerms) {
-      newErrors.agreeToTerms = 'You must agree to the terms and conditions'
+      newErrors.agreeToTerms = 'You must agree to the terms of service'
     }
-
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
-
-    if (validateForm()) {
-      console.log('Registration attempt:', formData)
-      alert('Registration successful! Welcome to Imteaz Rental.')
-      // In a real app, you'd handle registration here
+    
+    if (!validateForm()) return
+    
+    setIsSubmitting(true)
+    
+    try {
+      const response = await axios.post(`${API_URL}/register.php`, {
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        email: formData.email,
+        phone: formData.phone,
+        password: formData.password,
+        dateOfBirth: formData.dateOfBirth
+      })
+      
+      login(response.data.user, response.data.token)
+      navigate('/', { replace: true })
+      
+    } catch (error) {
+      console.error('Registration error:', error.response?.data)
+      
+      if (error.response?.status === 409) {
+        setErrors(prev => ({
+          ...prev,
+          email: 'Email already exists'
+        }))
+      } else {
+        alert('Registration failed. Please try again.')
+      }
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
+  
   return (
     <div className="auth-page">
       <div className="auth-container">
@@ -164,7 +163,7 @@ function Register() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="+880 1234-567890"
+                placeholder="(555) 123-4567"
                 className={errors.phone ? 'error' : ''}
               />
               {errors.phone && <span className="error-message">{errors.phone}</span>}
@@ -242,9 +241,13 @@ function Register() {
               </label>
             </div>
 
-            <button type="submit" className="auth-btn">
-              Create Account
-            </button>
+            <button 
+      type="submit" 
+      className="auth-btn"
+      disabled={isSubmitting}
+    >
+      {isSubmitting ? 'Creating Account...' : 'Create Account'}
+    </button>
           </form>
 
           <div className="auth-divider">

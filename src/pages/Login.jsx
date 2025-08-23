@@ -1,8 +1,13 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import API_URL from '../config';
 import './Auth.css'
+import { useAuth } from '../context/AuthContext'
 
 function Login() {
+  const navigate = useNavigate()
+  const { login } = useAuth()
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -10,6 +15,8 @@ function Login() {
   })
 
   const [errors, setErrors] = useState({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [loginError, setLoginError] = useState('')
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
@@ -17,14 +24,14 @@ function Login() {
       ...prev,
       [name]: type === 'checkbox' ? checked : value
     }))
-
-    // Clear error when user starts typing
+    
     if (errors[name]) {
       setErrors(prev => ({
         ...prev,
         [name]: ''
       }))
     }
+    setLoginError('')
   }
 
   const validateForm = () => {
@@ -38,21 +45,38 @@ function Login() {
 
     if (!formData.password) {
       newErrors.password = 'Password is required'
-    } else if (formData.password.length < 6) {
-      newErrors.password = 'Password must be at least 6 characters'
     }
 
     setErrors(newErrors)
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
+    
+    if (!validateForm()) return
 
-    if (validateForm()) {
-      console.log('Login attempt:', formData)
-      alert('Login successful! Welcome back.')
-      // In a real app, you'd handle authentication here
+    setIsSubmitting(true)
+    setLoginError('')
+
+    try {
+      const response = await axios.post(`${API_URL}/login.php`, {
+        email: formData.email,
+        password: formData.password
+      })
+
+      login(response.data.user, response.data.token)
+      navigate('/', { replace: true })
+
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        setLoginError('Invalid email or password')
+      } else {
+        setLoginError('An unexpected error occurred. Please try again.')
+      }
+      console.error('Login error:', error)
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -62,10 +86,11 @@ function Login() {
         <div className="auth-card" data-aos="zoom-in">
           <div className="auth-header" data-aos="fade-down" data-aos-delay="200">
             <h1>Welcome Back</h1>
-            <p>Sign in to your Imteaz Rental account</p>
+            <p>Sign in to your Car Rental account</p>
           </div>
 
           <form onSubmit={handleSubmit} className="auth-form" data-aos="fade-up" data-aos-delay="400">
+            {loginError && <div className="error-message auth-error">{loginError}</div>}
             <div className="form-group">
               <label htmlFor="email">Email Address</label>
               <input
@@ -109,8 +134,8 @@ function Login() {
               </Link>
             </div>
 
-            <button type="submit" className="auth-btn">
-              Sign In
+            <button type="submit" className="auth-btn" disabled={isSubmitting}>
+              {isSubmitting ? 'Signing In...' : 'Sign In'}
             </button>
           </form>
 

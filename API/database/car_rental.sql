@@ -1,6 +1,5 @@
 -- Car Rental Management Database Schema
-CREATE DATABASE IF NOT EXISTS car_rental_db;
-USE car_rental_db;
+
 
 -- Users table
 CREATE TABLE IF NOT EXISTS users (
@@ -118,12 +117,12 @@ INSERT INTO car_categories (name, description) VALUES
 ('Luxury', 'Premium cars with high-end features'),
 ('SUV', 'Sport utility vehicles for all terrains');
 
-INSERT INTO users (username, email, password, first_name, last_name, phone, role) VALUES
-('admin', 'admin@carrental.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 'User', '+1234567890', 'admin'),
-('john_doe', 'john@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'John', 'Doe', '+1234567891', 'customer');
+-- INSERT INTO users (username, email, password, first_name, last_name, phone, role) VALUES
+-- ('admin', 'admin@carrental.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'Admin', 'User', '+1234567890', 'admin'),
+-- ('john_doe', 'john@example.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'John', 'Doe', '+1234567891', 'customer');
 
-INSERT INTO cars (make, model, year, color, license_plate, category_id, daily_rate, fuel_type, transmission, seats, image_url, description) VALUES
-('Toyota', 'Corolla', 2022, 'White', 'ABC123', 1, 35.00, 'petrol', 'automatic', 5, '/api/car-image/corolla.jpg', 'Reliable and fuel-efficient compact car'),
-('Honda', 'Civic', 2023, 'Black', 'DEF456', 2, 40.00, 'petrol', 'manual', 5, '/api/car-image/civic.jpg', 'Sporty and efficient compact car'),
-('BMW', 'X5', 2022, 'Blue', 'GHI789', 6, 120.00, 'diesel', 'automatic', 7, '/api/car-image/x5.jpg', 'Luxury SUV with premium features'),
-('Mercedes-Benz', 'C-Class', 2023, 'Silver', 'JKL012', 5, 100.00, 'petrol', 'automatic', 5, '/api/car-image/c-class.jpg', 'Elegant luxury sedan');
+-- INSERT INTO cars (make, model, year, color, license_plate, category_id, daily_rate, fuel_type, transmission, seats, image_url, description) VALUES
+-- ('Toyota', 'Corolla', 2022, 'White', 'ABC123', 1, 35.00, 'petrol', 'automatic', 5, '/api/car-image/corolla.jpg', 'Reliable and fuel-efficient compact car'),
+-- ('Honda', 'Civic', 2023, 'Black', 'DEF456', 2, 40.00, 'petrol', 'manual', 5, '/api/car-image/civic.jpg', 'Sporty and efficient compact car'),
+-- ('BMW', 'X5', 2022, 'Blue', 'GHI789', 6, 120.00, 'diesel', 'automatic', 7, '/api/car-image/x5.jpg', 'Luxury SUV with premium features'),
+-- ('Mercedes-Benz', 'C-Class', 2023, 'Silver', 'JKL012', 5, 100.00, 'petrol', 'automatic', 5, '/api/car-image/c-class.jpg', 'Elegant luxury sedan');

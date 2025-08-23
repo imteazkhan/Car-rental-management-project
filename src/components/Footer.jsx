@@ -31,9 +31,9 @@ function Footer() {
         
         <div className="footer-section">
           <h4>Contact Info</h4>
-          <p><strong>Mail:</strong> info@car_rental.com</p>
-          <p><strong>Phone:</strong> +880 123-4567</p>
-          <p><strong>Address:</strong> 123 Rental Street, Mirpur, Dhaka-1216</p>
+          <p>📧 info@car_rental.com</p>
+          <p>📞 +880 123-4567</p>
+          <p>📍 123 Rental Street, Mirpur, Dhaka-1216</p>
         </div>
       </div>
       

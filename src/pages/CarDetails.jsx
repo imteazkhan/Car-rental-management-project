@@ -26,6 +26,13 @@ function CarDetails() {
   const totalAmount = car.price * totalDays;
 
   const handleBookNow = () => {
+    const user = localStorage.getItem('user');
+    if (!user) {
+      alert('You must be logged in to book a car.');
+      navigate('/login');
+      return;
+    }
+
     const newBooking = {
       id: Date.now(),
       carName: car.name,

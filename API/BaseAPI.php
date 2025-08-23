@@ -1,13 +1,29 @@
 <?php
-require_once 'database/config.php';
+// Determine which database config to use
+if (file_exists('database/config.php')) {
+    require_once 'database/config.php';
+    $use_pdo = true;
+} else {
+    require_once 'config/database.php';
+    $use_pdo = false;
+}
 
 class BaseAPI {
     protected $db;
     protected $conn;
+    protected $use_pdo;
 
     public function __construct() {
-        $this->db = new Database();
-        $this->conn = $this->db->getConnection();
+        $this->use_pdo = file_exists(__DIR__ . '/database/config.php');
+        
+        if ($this->use_pdo) {
+            $this->db = new Database();
+            $this->conn = $this->db->getConnection();
+        } else {
+            // Use the mysqli connection from config/database.php
+            global $conn;
+            $this->conn = $conn;
+        }
     }
 
     // Send JSON response

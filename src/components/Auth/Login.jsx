@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Car, LogIn, AlertCircle } from 'lucide-react';
+import API_URL from '../../config';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -27,7 +28,7 @@ const Login = () => {
     setError('');
 
     try {
-      const response = await fetch('/API/auth?action=login', {
+      const response = await fetch(`${API_URL}/auth?action=login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -42,12 +43,8 @@ const Login = () => {
         localStorage.setItem('token', data.data.token);
         localStorage.setItem('user', JSON.stringify(data.data.user));
         
-        // Redirect based on user role
-        if (data.data.user.role === 'admin') {
-          navigate('/admin/dashboard');
-        } else {
-          navigate('/customer/dashboard');
-        }
+        // Redirect to homepage
+        navigate('/');
       } else {
         setError(data.error || 'Login failed. Please try again.');
       }

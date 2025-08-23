@@ -1,11 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import './MyBookings.css'
+import API_URL from '../config';
+import axios from 'axios'
+
 
 function MyBookings() {
   const location = useLocation();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  // Fetch user bookings from API
+  useEffect(() => {
+    fetchBookings();
+  }, []);
 
   useEffect(() => {
     if (location.state && location.state.newBooking) {
@@ -25,6 +35,38 @@ function MyBookings() {
     }
   }, [location.state, navigate, location.pathname]);
 
+  const fetchBookings = async () => {
+    try {
+      setLoading(true);
+      const token = localStorage.getItem('token');
+      const user = JSON.parse(localStorage.getItem('user') || '{}');
+      
+      if (!token || !user.id) {
+        setError('Please login to view your bookings');
+        setLoading(false);
+        return;
+      }
+
+      const response = await axios.get(`${API_URL}/bookings.php`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.data.success) {
+        setBookings(response.data.data.bookings || []);
+      } else {
+        setError(response.data.message || 'Failed to fetch bookings');
+      }
+    } catch (err) {
+      console.error('Error fetching bookings:', err);
+      setError('Failed to load bookings. Please try again.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const [selectedBooking, setSelectedBooking] = useState(null)
 
   const getStatusColor = (status) => {
@@ -37,14 +79,36 @@ function MyBookings() {
     }
   }
 
-  const handleCancelBooking = (bookingId) => {
+  const handleCancelBooking = async (bookingId) => {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
-      setBookings(bookings.filter(booking => booking.id !== bookingId));
+      try {
+        const token = localStorage.getItem('token');
+        const response = await axios.put(`${API_URL}/bookings.php?id=${bookingId}&action=cancel`, {}, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (response.data.success) {
+          setBookings(bookings.map(booking => 
+            booking.id === bookingId 
+              ? { ...booking, status: 'cancelled' }
+              : booking
+          ));
+          alert('Booking cancelled successfully!');
+        } else {
+          alert(response.data.message || 'Failed to cancel booking');
+        }
+      } catch (err) {
+        console.error('Error cancelling booking:', err);
+        alert('Failed to cancel booking. Please try again.');
+      }
     }
   }
 
   const handleModifyBooking = (bookingId) => {
-    alert(`Redirecting to modify booking ${bookingId}...`)
+    navigate(`/modify-booking/${bookingId}`);
   }
 
   const canCancel = (status, startDate) => {
@@ -66,7 +130,17 @@ function MyBookings() {
       <div className="container">
         <h1 data-aos="fade-down">My Bookings</h1>
 
-        {bookings.length === 0 ? (
+        {loading ? (
+          <div className="loading" data-aos="fade-up">
+            <p>Loading your bookings...</p>
+          </div>
+        ) : error ? (
+          <div className="error" data-aos="fade-up">
+            <h3>Error</h3>
+            <p>{error}</p>
+            <button onClick={fetchBookings} className="retry-btn">Retry</button>
+          </div>
+        ) : bookings.length === 0 ? (
           <div className="no-bookings" data-aos="fade-up">
             <h3>No bookings found</h3>
             <p>You haven't made any bookings yet.</p>
@@ -88,10 +162,10 @@ function MyBookings() {
 
                 <div className="booking-content">
                   <div className="car-info">
-                    <img src={booking.carImage} alt={booking.carName} />
+                    <img src={booking.car_image || booking.carImage} alt={booking.car_name || booking.carName} />
                     <div className="car-details">
-                      <h3>{booking.carName}</h3>
-                      <p className="booking-date">Booked on: {new Date(booking.bookingDate).toLocaleDateString()}</p>
+                      <h3>{booking.car_name || booking.carName}</h3>
+                      <p className="booking-date">Booked on: {new Date(booking.booking_date || booking.bookingDate).toLocaleDateString()}</p>
                     </div>
                   </div>
 
@@ -99,31 +173,31 @@ function MyBookings() {
                     <div className="date-range">
                       <div className="date-item">
                         <label>Pick-up Date:</label>
-                        <span>{new Date(booking.startDate).toLocaleDateString()}</span>
+                        <span>{new Date(booking.start_date || booking.startDate).toLocaleDateString()}</span>
                       </div>
                       <div className="date-item">
                         <label>Return Date:</label>
-                        <span>{new Date(booking.endDate).toLocaleDateString()}</span>
+                        <span>{new Date(booking.end_date || booking.endDate).toLocaleDateString()}</span>
                       </div>
                       <div className="date-item">
                         <label>Total Days:</label>
-                        <span>{booking.totalDays} days</span>
+                        <span>{booking.total_days || booking.totalDays} days</span>
                       </div>
                     </div>
 
                     <div className="pricing">
                       <div className="price-breakdown">
-                        <span>${booking.pricePerDay}/day × {booking.totalDays} days</span>
+                        <span>${booking.price_per_day || booking.pricePerDay}/day × {booking.total_days || booking.totalDays} days</span>
                       </div>
                       <div className="total-amount">
-                        Total: ${booking.totalAmount}
+                        Total: ${booking.total_amount || booking.totalAmount}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="booking-actions">
-                  {canModify(booking.status, booking.startDate) && (
+                  {canModify(booking.status, booking.start_date || booking.startDate) && (
                     <button
                       className="modify-btn"
                       onClick={() => handleModifyBooking(booking.id)}
@@ -131,7 +205,7 @@ function MyBookings() {
                       Modify
                     </button>
                   )}
-                  {canCancel(booking.status, booking.startDate) && (
+                  {canCancel(booking.status, booking.start_date || booking.startDate) && (
                     <button
                       className="cancel-btn"
                       onClick={() => handleCancelBooking(booking.id)}
@@ -169,13 +243,13 @@ function MyBookings() {
             <div className="modal-body">
               <div className="modal-car-image">
                 <img
-                  src={selectedBooking.carImage}
-                  alt={selectedBooking.carName}
+                  src={selectedBooking.car_image || selectedBooking.carImage}
+                  alt={selectedBooking.car_name || selectedBooking.carName}
                 />
               </div>
 
               <div className="modal-info">
-                <h3>{selectedBooking.carName}</h3>
+                <h3>{selectedBooking.car_name || selectedBooking.carName}</h3>
                 <div className="booking-status-badge" style={{ backgroundColor: getStatusColor(selectedBooking.status) }}>
                   {selectedBooking.status.toUpperCase()}
                 </div>
@@ -188,27 +262,27 @@ function MyBookings() {
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Booked on:</span>
-                  <span className="detail-value">{new Date(selectedBooking.bookingDate).toLocaleDateString()}</span>
+                  <span className="detail-value">{new Date(selectedBooking.booking_date || selectedBooking.bookingDate).toLocaleDateString()}</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Pick-up Date:</span>
-                  <span className="detail-value">{new Date(selectedBooking.startDate).toLocaleDateString()}</span>
+                  <span className="detail-value">{new Date(selectedBooking.start_date || selectedBooking.startDate).toLocaleDateString()}</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Return Date:</span>
-                  <span className="detail-value">{new Date(selectedBooking.endDate).toLocaleDateString()}</span>
+                  <span className="detail-value">{new Date(selectedBooking.end_date || selectedBooking.endDate).toLocaleDateString()}</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Total Days:</span>
-                  <span className="detail-value">{selectedBooking.totalDays} days</span>
+                  <span className="detail-value">{selectedBooking.total_days || selectedBooking.totalDays} days</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Price per Day:</span>
-                  <span className="detail-value">${selectedBooking.pricePerDay}</span>
+                  <span className="detail-value">${selectedBooking.price_per_day || selectedBooking.pricePerDay}</span>
                 </div>
                 <div className="detail-item total-amount">
                   <span className="detail-label">Total Amount:</span>
-                  <span className="detail-value">${selectedBooking.totalAmount}</span>
+                  <span className="detail-value">${selectedBooking.total_amount || selectedBooking.totalAmount}</span>
                 </div>
               </div>
 

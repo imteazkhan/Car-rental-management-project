@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { User, Edit, Save, X, Phone, Mail, MapPin, Calendar, CreditCard } from 'lucide-react';
+import API_URL from '../../config';
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +23,7 @@ const Profile = () => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/API/auth', {
+      const response = await fetch(`${API_URL}/auth`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -53,7 +54,7 @@ const Profile = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/API/auth', {
+      const response = await fetch(`${API_URL}/auth`, {
         method: 'PUT',
         headers: {
           'Authorization': `Bearer ${token}`,

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CreditCard, Calendar, Car, DollarSign, CheckCircle, Clock, XCircle } from 'lucide-react';
+import API_URL from '../../config';
 
 const PaymentHistory = () => {
   const [payments, setPayments] = useState([]);
@@ -11,10 +12,9 @@ const PaymentHistory = () => {
 
   const fetchPayments = async () => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch('/API/payments', {
+      const response = await fetch(`${API_URL}/payments`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': localStorage.getItem('token'),
           'Content-Type': 'application/json'
         }
       });

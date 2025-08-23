@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .section { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+        .info { background-color: #d1ecf1; color: #0c5460; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        pre { background-color: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        .login-form { background-color: #f8f9fa; padding: 15px; border-radius: 5px; }
+        .login-form input { width: 200px; padding: 8px; margin: 5px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Car Rental Admin Dashboard Test</h1>
+        
+        <div class="section info">
+            <h3>Admin Login Test</h3>
+            <div class="login-form">
+                <div>
+                    <label>Email:</label>
+                    <input type="email" id="email" value="admin@carrental.com" />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" id="password" value="admin123" />
+                </div>
+                <div>
+                    <button onclick="loginTest()">Test Login</button>
+                    <button onclick="setupAdmin()">Setup Admin User</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3>API Tests</h3>
+            <button onclick="testDatabase()">Test Database Connection</button>
+            <button onclick="testAdminStats()">Test Admin Stats (No Auth)</button>
+            <button onclick="testAdminStatsWithAuth()">Test Admin Stats (With Auth)</button>
+            <button onclick="clearResults()">Clear Results</button>
+        </div>
+        
+        <div class="section">
+            <h3>Current Status</h3>
+            <div id="status">Ready to test...</div>
+        </div>
+        
+        <div class="section">
+            <h3>Test Results</h3>
+            <div id="results"></div>
+        </div>
+    </div>
+    
+    <script>
+        const API_URL = 'http://localhost/Imteaz/React/car-rental-management-project/API';
+        let currentToken = null;
+        let currentUser = null;
+        
+        function updateStatus(message, type = 'info') {
+            const status = document.getElementById('status');
+            status.className = `section ${type}`;
+            status.innerHTML = message;
+        }
+        
+        function addResult(title, data, type = 'info') {
+            const results = document.getElementById('results');
+            const div = document.createElement('div');
+            div.className = `section ${type}`;
+            div.innerHTML = `<h4>${title}</h4><pre>${JSON.stringify(data, null, 2)}</pre>`;
+            results.appendChild(div);
+        }
+        
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            updateStatus('Results cleared');
+        }
+        
+        async function setupAdmin() {
+            updateStatus('Setting up admin user...');
+            try {
+                const response = await fetch(`${API_URL}/setup_admin.php`);
+                const data = await response.json();
+                addResult('Admin Setup Result', data, data.success ? 'success' : 'error');
+                updateStatus(data.success ? 'Admin setup completed' : 'Admin setup failed', data.success ? 'success' : 'error');
+            } catch (error) {
+                addResult('Admin Setup Error', {error: error.message}, 'error');
+                updateStatus('Admin setup failed', 'error');
+            }
+        }
+        
+        async function loginTest() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            updateStatus('Testing login...');
+            
+            try {
+                const response = await fetch(`${API_URL}/login.php`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({email, password})
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.user) {
+                    currentUser = data.user;
+                    // Generate token compatible with admin.php
+                    currentToken = btoa(`${data.user.id}:${data.user.email}`);
+                    
+                    addResult('Login Success', {
+                        user: data.user,
+                        token: currentToken,
+                        isAdmin: data.user.role === 'admin'
+                    }, 'success');
+                    
+                    updateStatus(`Login successful! Welcome ${data.user.first_name} (${data.user.role})`, 'success');
+                } else {
+                    addResult('Login Failed', data, 'error');
+                    updateStatus('Login failed', 'error');
+                }
+            } catch (error) {
+                addResult('Login Error', {error: error.message}, 'error');
+                updateStatus('Login error', 'error');
+            }
+        }
+        
+        async function testDatabase() {
+            updateStatus('Testing database connection...');
+            try {
+                const response = await fetch(`${API_URL}/debug_admin.php`);
+                const data = await response.json();
+                addResult('Database Test', data, data.success ? 'success' : 'error');
+                updateStatus('Database test completed', data.success ? 'success' : 'error');
+            } catch (error) {
+                addResult('Database Test Error', {error: error.message}, 'error');
+                updateStatus('Database test failed', 'error');
+            }
+        }
+        
+        async function testAdminStats() {
+            updateStatus('Testing admin stats without authentication...');
+            try {
+                const response = await fetch(`${API_URL}/debug_admin.php?action=test-stats`);
+                const data = await response.json();
+                addResult('Admin Stats Test (No Auth)', data, data.success ? 'success' : 'error');
+                updateStatus('Admin stats test completed', data.success ? 'success' : 'error');
+            } catch (error) {
+                addResult('Admin Stats Test Error', {error: error.message}, 'error');
+                updateStatus('Admin stats test failed', 'error');
+            }
+        }
+        
+        async function testAdminStatsWithAuth() {
+            if (!currentToken) {
+                updateStatus('Please login first', 'error');
+                return;
+            }
+            
+            updateStatus('Testing admin stats with authentication...');
+            try {
+                const response = await fetch(`${API_URL}/admin.php?action=stats`, {
+                    headers: {
+                        'Authorization': currentToken
+                    }
+                });
+                const data = await response.json();
+                addResult('Admin Stats Test (With Auth)', data, data.success ? 'success' : 'error');
+                updateStatus('Admin stats with auth completed', data.success ? 'success' : 'error');
+            } catch (error) {
+                addResult('Admin Stats Auth Test Error', {error: error.message}, 'error');
+                updateStatus('Admin stats auth test failed', 'error');
+            }
+        }
+        
+        // Auto-setup on page load
+        window.onload = function() {
+            updateStatus('Page loaded. Ready to test admin dashboard.');
+        };
+    </script>
+</body>
+</html>

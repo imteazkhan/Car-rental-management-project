@@ -1,0 +1,615 @@
+/* Dashboard Styles */
+.admin-dashboard {
+  padding: 0;
+  background: #f5f7fb;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.header-content h1 {
+  margin: 0 0 5px 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.header-content p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #4361ee;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.refresh-btn:hover:not(:disabled) {
+  background: #3f37c9;
+  transform: translateY(-1px);
+}
+
+.refresh-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.refresh-btn.refreshing {
+  background: #6b7280;
+}
+
+/* Stats Grid */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(45deg, var(--icon-color), var(--icon-color-light));
+}
+
+.stat-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: white;
+  flex-shrink: 0;
+}
+
+.stat-icon.cars {
+  background: linear-gradient(45deg, #4361ee, #7c3aed);
+  --icon-color: #4361ee;
+  --icon-color-light: #7c3aed;
+}
+
+.stat-icon.users {
+  background: linear-gradient(45deg, #10b981, #059669);
+  --icon-color: #10b981;
+  --icon-color-light: #059669;
+}
+
+.stat-icon.bookings {
+  background: linear-gradient(45deg, #f59e0b, #d97706);
+  --icon-color: #f59e0b;
+  --icon-color-light: #d97706;
+}
+
+.stat-icon.revenue {
+  background: linear-gradient(45deg, #ef4444, #dc2626);
+  --icon-color: #ef4444;
+  --icon-color-light: #dc2626;
+}
+
+.stat-content {
+  flex: 1;
+}
+
+.stat-content h3 {
+  margin: 0 0 5px 0;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+}
+
+.stat-content p {
+  margin: 0 0 10px 0;
+  color: #6b7280;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.stat-breakdown {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.breakdown-item i {
+  font-size: 8px;
+}
+
+.breakdown-item.available i { color: #10b981; }
+.breakdown-item.rented i { color: #ef4444; }
+.breakdown-item.customers i { color: #4361ee; }
+.breakdown-item.admins i { color: #f59e0b; }
+.breakdown-item.active i { color: #10b981; }
+.breakdown-item.pending i { color: #f59e0b; }
+.breakdown-item.month i { color: #4361ee; }
+
+/* Dashboard Content */
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 25px;
+  margin-bottom: 25px;
+}
+
+.chart-section,
+.utilization-section,
+.recent-section {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.recent-section {
+  grid-column: 1 / -1;
+}
+
+.section-header {
+  padding: 20px 25px;
+  border-bottom: 1px solid #e5e7eb;
+  background: #f9fafb;
+}
+
+.section-header h2 {
+  margin: 0 0 5px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.chart-subtitle {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Revenue Chart */
+.revenue-chart {
+  padding: 25px;
+  min-height: 300px;
+}
+
+.chart-bars {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  height: 250px;
+  padding: 20px 0;
+}
+
+.chart-bar-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.chart-bar {
+  width: 100%;
+  background: linear-gradient(to top, #4361ee, #7c3aed);
+  border-radius: 4px 4px 0 0;
+  min-height: 10px;
+  position: relative;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.chart-bar:hover {
+  background: linear-gradient(to top, #3f37c9, #6d28d9);
+  transform: scaleY(1.05);
+}
+
+.bar-value {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  font-weight: 500;
+  color: #374151;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.chart-bar:hover .bar-value {
+  opacity: 1;
+}
+
+.bar-label {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.chart-empty,
+.utilization-empty,
+.recent-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: #9ca3af;
+}
+
+.chart-empty i,
+.utilization-empty i,
+.recent-empty i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+/* Car Utilization */
+.utilization-list {
+  padding: 25px;
+}
+
+.utilization-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.utilization-item:last-child {
+  border-bottom: none;
+}
+
+.car-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 200px;
+}
+
+.car-rank {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #4361ee;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.car-details h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.license-plate {
+  font-size: 12px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.utilization-stats {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.utilization-bar {
+  height: 8px;
+  background: #f3f4f6;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.utilization-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4361ee, #7c3aed);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.utilization-numbers {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.bookings-count {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #f59e0b;
+  font-weight: 500;
+}
+
+/* Recent Bookings */
+.recent-bookings {
+  padding: 25px;
+}
+
+.recent-booking-item {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.recent-booking-item:last-child {
+  border-bottom: none;
+}
+
+.booking-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #10b981, #059669);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.booking-details {
+  flex: 1;
+}
+
+.booking-details h4 {
+  margin: 0 0 4px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.booking-details p {
+  margin: 0 0 4px 0;
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.booking-dates {
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+.booking-status {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.booking-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: #059669;
+}
+
+/* Loading and Error States */
+.dashboard-loading,
+.dashboard-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  color: #4361ee;
+}
+
+.loading-spinner i {
+  font-size: 2.5rem;
+}
+
+.dashboard-error {
+  color: #ef4444;
+}
+
+.dashboard-error i {
+  font-size: 3rem;
+  margin-bottom: 15px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .chart-section {
+    order: 1;
+  }
+  
+  .utilization-section {
+    order: 2;
+  }
+  
+  .recent-section {
+    order: 3;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-dashboard {
+    padding: 0;
+  }
+
+  .dashboard-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 15px;
+    margin: 0 0 20px 0;
+    border-radius: 0;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    padding: 20px;
+    border-radius: 0;
+  }
+
+  .chart-section,
+  .utilization-section,
+  .recent-section {
+    border-radius: 0;
+    margin: 0 0 20px 0;
+  }
+
+  .section-header,
+  .revenue-chart,
+  .utilization-list,
+  .recent-bookings {
+    padding: 20px;
+  }
+
+  .chart-bars {
+    height: 200px;
+    gap: 8px;
+  }
+
+  .car-info {
+    min-width: auto;
+    flex: 1;
+  }
+
+  .utilization-item,
+  .recent-booking-item {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .booking-status {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .stat-content h3 {
+    font-size: 1.5rem;
+  }
+
+  .breakdown-item {
+    font-size: 11px;
+  }
+
+  .chart-bars {
+    height: 150px;
+    gap: 6px;
+  }
+
+  .bar-label {
+    font-size: 10px;
+  }
+}
+
+/* Status Badge Styles */
+.status-badge {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.status-confirmed, .status-active, .status-completed {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status-cancelled {
+  background: #f8d7da;
+  color: #721c24;
+}

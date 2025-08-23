@@ -1,12 +1,13 @@
 <?php
-// API Router - Main entry point for all API requests
-require_once 'database/config.php';
 
 // Set headers for CORS and JSON response
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
 header("Content-Type: application/json; charset=UTF-8");
+
+// API Router - Main entry point for all API requests
+require_once 'database/config.php';
 
 // Handle preflight OPTIONS request
 if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -21,9 +22,10 @@ $request_method = $_SERVER['REQUEST_METHOD'];
 // Parse the URL to get the endpoint
 $url_parts = parse_url($request_uri);
 $path = $url_parts['path'];
+error_log($path);
 
 // Remove the base path (adjust this based on your server setup)
-$base_path = '/Car-rental-management-project/API/';
+$base_path = 'http://localhost/car-rental-management-project/API/';
 $endpoint = str_replace($base_path, '', $path);
 
 // Route requests to appropriate API files

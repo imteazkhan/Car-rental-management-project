@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Car, UserPlus, AlertCircle, CheckCircle } from 'lucide-react';
+import API_URL from '../../config';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -60,14 +61,12 @@ const Register = () => {
     }
 
     try {
-      const { confirmPassword, ...submitData } = formData;
-      
-      const response = await fetch('/API/auth?action=register', {
+      const response = await fetch(`${API_URL}/auth.php?action=register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(submitData)
+        body: JSON.stringify(formData)
       });
 
       const data = await response.json();

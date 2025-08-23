@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Star, Car, Calendar, Edit, Trash2, Plus } from 'lucide-react';
+import API_URL from '../../config';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -12,7 +13,7 @@ const Reviews = () => {
   const fetchReviews = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/API/reviews', {
+      const response = await fetch(`${API_URL}/reviews`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json'

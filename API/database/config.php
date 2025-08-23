@@ -2,7 +2,7 @@
 // Database configuration
 class Database {
     private $host = "localhost";
-    private $db_name = "car_rental_db";
+    private $db_name = "car_rental";
     private $username = "root";
     private $password = "";
     public $conn;
@@ -17,22 +17,12 @@ class Database {
             $this->conn->exec("set names utf8");
             $this->conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         } catch(PDOException $exception) {
-            echo "Connection error: " . $exception->getMessage();
+            // Log the error and throw it instead of just echoing
+            error_log("Database connection error: " . $exception->getMessage());
+            throw new Exception("Database connection failed: " . $exception->getMessage());
         }
         
         return $this->conn;
     }
-}
-
-// Enable CORS for React frontend
-header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-header("Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With");
-header("Content-Type: application/json; charset=UTF-8");
-
-// Handle preflight OPTIONS request
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit();
 }
 ?>
