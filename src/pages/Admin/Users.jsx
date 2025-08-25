@@ -73,18 +73,33 @@ const Users = () => {
         body: JSON.stringify(formData)
       });
       
-      const data = await response.json();
+      // Debug: Log response details
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+      
+      const responseText = await response.text();
+      console.log('Raw response:', responseText);
+      
+      let data;
+      try {
+        data = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON Parse Error:', parseError);
+        console.error('Response that failed to parse:', responseText);
+        showError(`Server returned invalid response: ${responseText.substring(0, 100)}...`);
+        return;
+      }
       
       if (data.success) {
         showSuccess('User created successfully');
         setShowAddModal(false);
         fetchUsers(currentPage);
       } else {
-        showError(data.message || 'Failed to create user');
+        showError(data.message || data.error || 'Failed to create user');
       }
     } catch (err) {
       console.error('Error creating user:', err);
-      showError('Failed to create user');
+      showError(`Failed to create user: ${err.message}`);
     } finally {
       setSubmitting(false);
     }

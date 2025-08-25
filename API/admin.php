@@ -1,4 +1,9 @@
 <?php
+// Suppress error output to prevent HTML in JSON responses
+ini_set('display_errors', 0);
+ini_set('log_errors', 1);
+error_reporting(E_ALL);
+
 // Enable CORS for React frontend
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
@@ -295,49 +300,112 @@ class AdminAPI extends BaseAPI {
     
     // Create new user
     public function createUser() {
-        $this->verifyAdmin();
-        
-        $data = $this->getRequestData();
-        
-        // Validate required fields
-        $this->validateRequired($data, ['username', 'email', 'password', 'first_name', 'last_name']);
-        
-        $data = $this->sanitizeInput($data);
-        
-        // Check if username or email already exists
-        $check_query = "SELECT id FROM users WHERE username = :username OR email = :email";
-        $check_stmt = $this->conn->prepare($check_query);
-        $check_stmt->bindParam(':username', $data['username']);
-        $check_stmt->bindParam(':email', $data['email']);
-        $check_stmt->execute();
-        
-        if ($check_stmt->rowCount() > 0) {
-            $this->sendError('Username or email already exists', 409);
-        }
-        
-        // Hash password
-        $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
-        
-        $query = "INSERT INTO users (username, email, password, first_name, last_name, phone, address, date_of_birth, license_number, role) 
-                  VALUES (:username, :email, :password, :first_name, :last_name, :phone, :address, :date_of_birth, :license_number, :role)";
-        
-        $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':username', $data['username']);
-        $stmt->bindParam(':email', $data['email']);
-        $stmt->bindParam(':password', $hashed_password);
-        $stmt->bindParam(':first_name', $data['first_name']);
-        $stmt->bindParam(':last_name', $data['last_name']);
-        $stmt->bindParam(':phone', $data['phone'] ?? null);
-        $stmt->bindParam(':address', $data['address'] ?? null);
-        $stmt->bindParam(':date_of_birth', $data['date_of_birth'] ?? null);
-        $stmt->bindParam(':license_number', $data['license_number'] ?? null);
-        $stmt->bindParam(':role', $data['role'] ?? 'customer');
-        
-        if ($stmt->execute()) {
-            $user_id = $this->conn->lastInsertId();
-            $this->sendSuccess(['user_id' => $user_id], 'User created successfully');
-        } else {
-            $this->sendError('Failed to create user', 500);
+        try {
+            $this->verifyAdmin();
+            
+            $data = $this->getRequestData();
+            
+            // Debug logging
+            error_log("Creating user with data: " . json_encode($data));
+            
+            // Validate required fields
+            $this->validateRequired($data, ['username', 'email', 'password', 'first_name', 'last_name']);
+            
+            $data = $this->sanitizeInput($data);
+            
+            // Check if username or email already exists
+            if ($this->use_pdo) {
+                // PDO version
+                $check_query = "SELECT id FROM users WHERE username = :username OR email = :email";
+                $check_stmt = $this->conn->prepare($check_query);
+                $check_stmt->bindValue(':username', $data['username']);
+                $check_stmt->bindValue(':email', $data['email']);
+                $check_stmt->execute();
+                
+                if ($check_stmt->rowCount() > 0) {
+                    $this->sendError('Username or email already exists', 409);
+                }
+            } else {
+                // MySQLi version
+                $check_query = "SELECT id FROM users WHERE username = ? OR email = ?";
+                $check_stmt = $this->conn->prepare($check_query);
+                $check_stmt->bind_param('ss', $data['username'], $data['email']);
+                $check_stmt->execute();
+                $result = $check_stmt->get_result();
+                
+                if ($result->num_rows > 0) {
+                    $this->sendError('Username or email already exists', 409);
+                }
+                $check_stmt->close();
+            }
+            
+            // Hash password
+            $hashed_password = password_hash($data['password'], PASSWORD_DEFAULT);
+            
+            if ($this->use_pdo) {
+                // PDO version
+                $query = "INSERT INTO users (username, email, password, first_name, last_name, phone, address, date_of_birth, license_number, role) 
+                          VALUES (:username, :email, :password, :first_name, :last_name, :phone, :address, :date_of_birth, :license_number, :role)";
+                
+                $stmt = $this->conn->prepare($query);
+                $stmt->bindValue(':username', $data['username']);
+                $stmt->bindValue(':email', $data['email']);
+                $stmt->bindValue(':password', $hashed_password);
+                $stmt->bindValue(':first_name', $data['first_name']);
+                $stmt->bindValue(':last_name', $data['last_name']);
+                $stmt->bindValue(':phone', $data['phone'] ?? null);
+                $stmt->bindValue(':address', $data['address'] ?? null);
+                $stmt->bindValue(':date_of_birth', $data['date_of_birth'] ?? null);
+                $stmt->bindValue(':license_number', $data['license_number'] ?? null);
+                $stmt->bindValue(':role', $data['role'] ?? 'customer');
+                
+                if ($stmt->execute()) {
+                    $user_id = $this->conn->lastInsertId();
+                    error_log("User created successfully with ID: " . $user_id);
+                    $this->sendSuccess(['user_id' => $user_id], 'User created successfully');
+                } else {
+                    $errorInfo = $stmt->errorInfo();
+                    error_log("SQL execution failed: " . json_encode($errorInfo));
+                    $this->sendError('Failed to create user: ' . ($errorInfo[2] ?? 'Unknown database error'), 500);
+                }
+            } else {
+                // MySQLi version
+                $query = "INSERT INTO users (username, email, password, first_name, last_name, phone, address, date_of_birth, license_number, role) 
+                          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                
+                $stmt = $this->conn->prepare($query);
+                $phone = $data['phone'] ?? null;
+                $address = $data['address'] ?? null;
+                $date_of_birth = $data['date_of_birth'] ?? null;
+                $license_number = $data['license_number'] ?? null;
+                $role = $data['role'] ?? 'customer';
+                
+                $stmt->bind_param('ssssssssss', 
+                    $data['username'], 
+                    $data['email'], 
+                    $hashed_password, 
+                    $data['first_name'], 
+                    $data['last_name'], 
+                    $phone, 
+                    $address, 
+                    $date_of_birth, 
+                    $license_number, 
+                    $role
+                );
+                
+                if ($stmt->execute()) {
+                    $user_id = $this->conn->insert_id;
+                    error_log("User created successfully with ID: " . $user_id);
+                    $this->sendSuccess(['user_id' => $user_id], 'User created successfully');
+                } else {
+                    error_log("SQL execution failed: " . $stmt->error);
+                    $this->sendError('Failed to create user: ' . $stmt->error, 500);
+                }
+                $stmt->close();
+            }
+        } catch (Exception $e) {
+            error_log("Exception in createUser: " . $e->getMessage());
+            $this->sendError('Server error: ' . $e->getMessage(), 500);
         }
     }
     
@@ -568,105 +636,123 @@ class AdminAPI extends BaseAPI {
 }
 
 // Handle API requests
-$admin = new AdminAPI();
+try {
+    $admin = new AdminAPI();
 
-switch ($_SERVER['REQUEST_METHOD']) {
-    case 'GET':
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'stats':
-                    $admin->getDashboardStats();
-                    break;
-                case 'revenue-chart':
-                    $admin->getRevenueChart();
-                    break;
-                case 'car-utilization':
-                    $admin->getCarUtilization();
-                    break;
-                case 'users':
-                    $admin->getAllUsers();
-                    break;
-                case 'user':
-                    if (isset($_GET['user_id'])) {
-                        $admin->getUser($_GET['user_id']);
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(['error' => 'User ID required']);
-                    }
-                    break;
-                default:
-                    http_response_code(404);
-                    echo json_encode(['error' => 'Action not found']);
+    switch ($_SERVER['REQUEST_METHOD']) {
+        case 'GET':
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'stats':
+                        $admin->getDashboardStats();
+                        break;
+                    case 'revenue-chart':
+                        $admin->getRevenueChart();
+                        break;
+                    case 'car-utilization':
+                        $admin->getCarUtilization();
+                        break;
+                    case 'users':
+                        $admin->getAllUsers();
+                        break;
+                    case 'user':
+                        if (isset($_GET['user_id'])) {
+                            $admin->getUser($_GET['user_id']);
+                        } else {
+                            http_response_code(400);
+                            echo json_encode(['success' => false, 'error' => 'User ID required']);
+                        }
+                        break;
+                    default:
+                        http_response_code(404);
+                        echo json_encode(['success' => false, 'error' => 'Action not found']);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Action required']);
             }
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Action required']);
-        }
-        break;
-        
-    case 'POST':
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'maintenance':
-                    $admin->addMaintenanceRecord();
-                    break;
-                case 'user':
-                    $admin->createUser();
-                    break;
-                case 'bulk':
-                    $admin->bulkAction();
-                    break;
-                default:
-                    http_response_code(404);
-                    echo json_encode(['error' => 'Action not found']);
+            break;
+            
+        case 'POST':
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'maintenance':
+                        $admin->addMaintenanceRecord();
+                        break;
+                    case 'user':
+                        $admin->createUser();
+                        break;
+                    case 'bulk':
+                        $admin->bulkAction();
+                        break;
+                    default:
+                        http_response_code(404);
+                        echo json_encode(['success' => false, 'error' => 'Action not found']);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Action required']);
             }
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Action required']);
-        }
-        break;
-        
-    case 'PUT':
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'user-role':
-                    if (isset($_GET['user_id'])) {
-                        $admin->updateUserRole($_GET['user_id']);
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(['error' => 'User ID required']);
-                    }
-                    break;
-                case 'user':
-                    if (isset($_GET['user_id'])) {
-                        $admin->updateUser($_GET['user_id']);
-                    } else {
-                        http_response_code(400);
-                        echo json_encode(['error' => 'User ID required']);
-                    }
-                    break;
-                default:
-                    http_response_code(404);
-                    echo json_encode(['error' => 'Action not found']);
+            break;
+            
+        case 'PUT':
+            if (isset($_GET['action'])) {
+                switch ($_GET['action']) {
+                    case 'user-role':
+                        if (isset($_GET['user_id'])) {
+                            $admin->updateUserRole($_GET['user_id']);
+                        } else {
+                            http_response_code(400);
+                            echo json_encode(['success' => false, 'error' => 'User ID required']);
+                        }
+                        break;
+                    case 'user':
+                        if (isset($_GET['user_id'])) {
+                            $admin->updateUser($_GET['user_id']);
+                        } else {
+                            http_response_code(400);
+                            echo json_encode(['success' => false, 'error' => 'User ID required']);
+                        }
+                        break;
+                    default:
+                        http_response_code(404);
+                        echo json_encode(['success' => false, 'error' => 'Action not found']);
+                }
+            } else {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Action required']);
             }
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Action required']);
-        }
-        break;
-        
-    case 'DELETE':
-        if (isset($_GET['action']) && $_GET['action'] === 'user' && isset($_GET['user_id'])) {
-            $admin->deleteUser($_GET['user_id']);
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid request']);
-        }
-        break;
-        
-    default:
-        http_response_code(405);
-        echo json_encode(['error' => 'Method not allowed']);
+            break;
+            
+        case 'DELETE':
+            if (isset($_GET['action']) && $_GET['action'] === 'user' && isset($_GET['user_id'])) {
+                $admin->deleteUser($_GET['user_id']);
+            } else {
+                http_response_code(400);
+                echo json_encode(['success' => false, 'error' => 'Invalid request']);
+            }
+            break;
+            
+        default:
+            http_response_code(405);
+            echo json_encode(['success' => false, 'error' => 'Method not allowed']);
+    }
+} catch (Exception $e) {
+    error_log("Uncaught exception in admin.php: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Internal server error',
+        'message' => $e->getMessage()
+    ]);
+} catch (Error $e) {
+    error_log("Fatal error in admin.php: " . $e->getMessage());
+    http_response_code(500);
+    echo json_encode([
+        'success' => false,
+        'error' => 'Fatal server error',
+        'message' => $e->getMessage()
+    ]);
 }
 
 ?>

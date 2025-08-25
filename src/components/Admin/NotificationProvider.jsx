@@ -29,7 +29,7 @@ export const NotificationProvider = ({ children }) => {
     // Auto remove after duration
     if (newNotification.duration > 0) {
       setTimeout(() => {
-        removeNotification(id);
+        setNotifications(prev => prev.filter(n => n.id !== id));
       }, newNotification.duration);
     }
 

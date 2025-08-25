@@ -1,0 +1,119 @@
+[25-Aug-2025 06:19:37 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:27 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:29 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:31 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:32 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:24:33 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\admin.php:330
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\admin.php(614): AdminAPI->createUser()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\admin.php on line 330
+[25-Aug-2025 06:33:00 Europe/Berlin] Creating user with data: {"username":"mamun","email":"mamun@gmail.com","password":"A12@345a","first_name":"ishaq","last_name":"sojib","phone":"01401775566","date_of_birth":"2002-08-06","address":"mirpur","license_number":"321456987456","role":"customer"}
+[25-Aug-2025 06:33:00 Europe/Berlin] Fatal error in admin.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 06:33:48 Europe/Berlin] Creating user with data: {"username":"mamun","email":"mamun@gmail.com","password":"A12@345a","first_name":"ishaq","last_name":"sojib","phone":"01401775566","date_of_birth":"2001-08-06","address":"mirpur","license_number":"321456987456","role":"customer"}
+[25-Aug-2025 06:33:48 Europe/Berlin] Fatal error in admin.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 06:36:01 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 06:36:01 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"white","daily_rate":23,"license_plate":"12365478998","vin":"","category_id":3,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":23000,"image_url":"","description":"","features":""}
+[25-Aug-2025 06:36:01 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\cars.php:183
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\cars.php(313): CarsAPI->addCar()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\cars.php on line 183
+[25-Aug-2025 06:47:35 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 06:47:35 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"white","daily_rate":23,"license_plate":"12365478998","vin":"","category_id":3,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":23000,"image_url":"","description":"","features":""}
+[25-Aug-2025 06:47:35 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\cars.php:183
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\cars.php(313): CarsAPI->addCar()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\cars.php on line 183
+[25-Aug-2025 06:58:22 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 06:58:22 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"white","daily_rate":23,"license_plate":"12365478998","vin":"","category_id":3,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":23000,"image_url":"","description":"","features":""}
+[25-Aug-2025 06:58:22 Europe/Berlin] PHP Fatal error:  Uncaught Error: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference in D:\xampp\htdocs\car-rental-management-project\API\cars.php:183
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\cars.php(313): CarsAPI->addCar()
+#1 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\cars.php on line 183
+[25-Aug-2025 07:11:28 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 07:11:28 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"white","daily_rate":23,"license_plate":"12365478998","vin":"","category_id":2,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 07:11:28 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 07:21:28 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 07:21:28 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"white","daily_rate":23,"license_plate":"12365478998","vin":"","category_id":2,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 07:21:28 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 07:58:01 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 07:58:01 Europe/Berlin] AddCar - Received data: {"make":"asas","model":"a","year":2001,"color":"","daily_rate":15,"license_plate":"12365478998","vin":"","category_id":"","fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 07:58:01 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 08:00:16 Europe/Berlin] Creating user with data: {"username":"mamun","email":"mamun@gmail.com","password":"A12@345a","first_name":"ishaq","last_name":"sojib","phone":"01401775566","date_of_birth":"2001-08-12","address":"mirpur","license_number":"","role":"customer"}
+[25-Aug-2025 08:00:16 Europe/Berlin] Fatal error in admin.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 08:13:28 Europe/Berlin] Creating user with data: {"username":"mamun","email":"mamun@gmail.com","password":"A12@345a","first_name":"rashibul","last_name":"Kabir","phone":"01401775566","date_of_birth":"2002-08-14","address":"","license_number":"321456987456","role":"customer"}
+[25-Aug-2025 08:13:28 Europe/Berlin] User created successfully with ID: 6
+[25-Aug-2025 08:14:48 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:14:48 Europe/Berlin] AddCar - Received data: {"make":"bmw","model":"a","year":2001,"color":"white","daily_rate":22,"license_plate":"12365478998","vin":"","category_id":"","fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 08:14:48 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 08:16:40 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:16:40 Europe/Berlin] AddCar - Received data: {"make":"bmw","model":"a","year":2001,"color":"white","daily_rate":22,"license_plate":"12365478998","vin":"","category_id":"","fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 08:16:40 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 08:17:05 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:17:05 Europe/Berlin] AddCar - Received data: {"make":"bmw","model":"a","year":2001,"color":"white","daily_rate":20,"license_plate":"12365478998","vin":"","category_id":"","fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 08:17:05 Europe/Berlin] Fatal error in cars.php: PDOStatement::bindParam(): Argument #2 ($var) cannot be passed by reference
+[25-Aug-2025 08:43:42 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:43:42 Europe/Berlin] AddCar - Received data: {"make":"bmw","model":"a","year":2001,"color":"white","daily_rate":22,"license_plate":"12365478998","vin":"","category_id":"","fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 08:43:42 Europe/Berlin] Exception in addCar: SQLSTATE[23000]: Integrity constraint violation: 1452 Cannot add or update a child row: a foreign key constraint fails (`car_rental`.`cars`, CONSTRAINT `cars_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `car_categories` (`id`) ON DELETE SET NULL)
+[25-Aug-2025 08:47:27 Europe/Berlin] Creating user with data: {"username":"ishaq","email":"ishaq@gmail.com","password":"A12@345a","first_name":"ishaq","last_name":"sojib","phone":"01911123456","date_of_birth":"2006-08-12","address":"","license_number":"","role":"customer"}
+[25-Aug-2025 08:47:27 Europe/Berlin] User created successfully with ID: 7
+[25-Aug-2025 08:52:09 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:52:09 Europe/Berlin] AddCar - Received data: {"make":"bmw","model":"a","year":2001,"color":"white","daily_rate":15,"license_plate":"12365478998","vin":"","category_id":5,"fuel_type":"petrol","transmission":"manual","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[25-Aug-2025 08:52:09 Europe/Berlin] AddCar - Success: Car ID 2
+[25-Aug-2025 08:54:04 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:54:04 Europe/Berlin] AddCar - Received data: {"make":"audi","model":"q7","year":2005,"color":"black","daily_rate":25,"license_plate":"213654569","vin":"","category_id":6,"fuel_type":"hybrid","transmission":"automatic","seats":5,"mileage":25000,"image_url":"","description":"","features":""}
+[25-Aug-2025 08:54:04 Europe/Berlin] Exception in addCar: SQLSTATE[23000]: Integrity constraint violation: 1062 Duplicate entry '' for key 'vin'
+[25-Aug-2025 08:55:30 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:55:30 Europe/Berlin] AddCar - Received data: {"make":"audi","model":"q7","year":2005,"color":"black","daily_rate":25,"license_plate":"213654569","vin":"213654","category_id":6,"fuel_type":"hybrid","transmission":"automatic","seats":5,"mileage":25000,"image_url":"","description":"","features":""}
+[25-Aug-2025 08:55:30 Europe/Berlin] AddCar - Success: Car ID 4
+[25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Token: Present
+[25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Received data: {"make":"byd","model":"seal","year":2022,"color":"black","daily_rate":25,"license_plate":"546213879","vin":"236547","category_id":3,"fuel_type":"electric","transmission":"automatic","seats":4,"mileage":1234,"image_url":"","description":"","features":["AC","GPS","Camera","Car Play"]}
+[25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Success: Car ID 5

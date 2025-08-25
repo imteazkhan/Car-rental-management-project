@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Modal from './Modal';
 import './Modal.css';
 
@@ -17,20 +17,51 @@ const FormModal = ({
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
 
+  // Memoize the fields processing to prevent unnecessary recalculations
+  // Stringify fields and initialData to create stable dependencies
+  const fieldsString = useMemo(() => JSON.stringify(fields), [fields]);
+  const initialDataString = useMemo(() => JSON.stringify(initialData), [initialData]);
+  
+  const processedInitialData = useMemo(() => {
+    if (!isOpen) return {};
+    
+    const initialFormData = {};
+    
+    const processFields = (fieldList) => {
+      fieldList.forEach(field => {
+        if (field.type === 'group' && field.fields) {
+          // Process grouped fields
+          processFields(field.fields);
+        } else {
+          // Process individual fields
+          initialFormData[field.name] = initialData[field.name] || field.defaultValue || '';
+        }
+      });
+    };
+    
+    processFields(fields);
+    return initialFormData;
+  }, [isOpen, fieldsString, initialDataString]);
+
+  // Only reset form when modal opens or when the actual data content changes
   useEffect(() => {
     if (isOpen) {
-      // Initialize form data with initial values
-      const initialFormData = {};
-      fields.forEach(field => {
-        initialFormData[field.name] = initialData[field.name] || field.defaultValue || '';
+      // Only update if the data has actually changed
+      setFormData(prevData => {
+        const newData = processedInitialData;
+        // Compare stringified versions to avoid unnecessary updates
+        if (JSON.stringify(prevData) !== JSON.stringify(newData)) {
+          return newData;
+        }
+        return prevData;
       });
-      setFormData(initialFormData);
       setErrors({});
       setTouched({});
     }
-  }, [isOpen, initialData, fields]);
+  }, [isOpen, fieldsString, initialDataString]);
 
-  const validateField = (field, value) => {
+  // Remove formData dependency from validateField
+  const validateField = useCallback((field, value, currentFormData = {}) => {
     const { name, label, required, validation, type } = field;
     
     // Required validation
@@ -80,10 +111,10 @@ const FormModal = ({
         }
       }
 
-      // Custom validation
+      // Custom validation - pass currentFormData as parameter instead of using closure
       if (validation) {
         if (typeof validation === 'function') {
-          const result = validation(value, formData);
+          const result = validation(value, currentFormData);
           if (result !== true) {
             return result;
           }
@@ -97,69 +128,104 @@ const FormModal = ({
     }
 
     return null;
-  };
+  }, []); // Empty dependency array since we pass formData as parameter
 
-  const validateForm = () => {
+  const validateForm = useCallback(() => {
     const newErrors = {};
     let isValid = true;
 
-    fields.forEach(field => {
-      const error = validateField(field, formData[field.name]);
-      if (error) {
-        newErrors[field.name] = error;
-        isValid = false;
-      }
-    });
+    const processFields = (fieldList) => {
+      fieldList.forEach(field => {
+        if (field.type === 'group' && field.fields) {
+          // Process grouped fields
+          processFields(field.fields);
+        } else {
+          // Process individual fields
+          const error = validateField(field, formData[field.name], formData);
+          if (error) {
+            newErrors[field.name] = error;
+            isValid = false;
+          }
+        }
+      });
+    };
 
+    processFields(fields);
     setErrors(newErrors);
     return isValid;
-  };
+  }, [fields, formData, validateField]);
 
-  const handleFieldChange = (name, value) => {
+  const handleFieldChange = useCallback((name, value) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
 
     // Clear error when user starts typing
-    if (errors[name]) {
-      setErrors(prev => ({
-        ...prev,
-        [name]: null
-      }));
-    }
-  };
+    setErrors(prev => {
+      if (prev[name]) {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      }
+      return prev;
+    });
+  }, []);
 
-  const handleFieldBlur = (name) => {
+  const handleFieldBlur = useCallback((name) => {
     setTouched(prev => ({
       ...prev,
       [name]: true
     }));
 
-    const field = fields.find(f => f.name === name);
+    // Find field in potentially grouped structure
+    const findField = (fieldList, fieldName) => {
+      for (const field of fieldList) {
+        if (field.type === 'group' && field.fields) {
+          const found = findField(field.fields, fieldName);
+          if (found) return found;
+        } else if (field.name === fieldName) {
+          return field;
+        }
+      }
+      return null;
+    };
+
+    const field = findField(fields, name);
     if (field) {
-      const error = validateField(field, formData[name]);
+      const error = validateField(field, formData[name], formData);
       setErrors(prev => ({
         ...prev,
         [name]: error
       }));
     }
-  };
+  }, [fields, formData, validateField]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     
     // Mark all fields as touched
     const allTouched = {};
-    fields.forEach(field => {
-      allTouched[field.name] = true;
-    });
+    
+    const processFields = (fieldList) => {
+      fieldList.forEach(field => {
+        if (field.type === 'group' && field.fields) {
+          // Process grouped fields
+          processFields(field.fields);
+        } else {
+          // Process individual fields
+          allTouched[field.name] = true;
+        }
+      });
+    };
+    
+    processFields(fields);
     setTouched(allTouched);
 
     if (validateForm()) {
       onSubmit(formData);
     }
-  };
+  }, [fields, formData, validateForm, onSubmit]);
 
   const renderField = (field) => {
     const { 
@@ -294,18 +360,16 @@ const FormModal = ({
       )}
       
       <form onSubmit={handleSubmit}>
-        <div className="modal-content">
-          {fields.map(field => {
-            if (field.type === 'group') {
-              return (
-                <div key={field.name} className={`form-row ${field.columns ? `${field.columns}-columns` : ''}`}>
-                  {field.fields.map(renderField)}
-                </div>
-              );
-            }
-            return renderField(field);
-          })}
-        </div>
+        {fields.map(field => {
+          if (field.type === 'group') {
+            return (
+              <div key={field.name} className={`form-row ${field.columns ? `${field.columns}-columns` : ''}`}>
+                {field.fields.map(renderField)}
+              </div>
+            );
+          }
+          return renderField(field);
+        })}
         
         <div className="modal-actions">
           <button

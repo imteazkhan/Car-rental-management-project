@@ -14,15 +14,23 @@ class BaseAPI {
     protected $use_pdo;
 
     public function __construct() {
-        $this->use_pdo = file_exists(__DIR__ . '/database/config.php');
-        
-        if ($this->use_pdo) {
+        // Check which database config exists
+        if (file_exists(__DIR__ . '/database/config.php')) {
+            require_once __DIR__ . '/database/config.php';
+            $this->use_pdo = true;
             $this->db = new Database();
             $this->conn = $this->db->getConnection();
         } else {
+            require_once __DIR__ . '/config/database.php';
+            $this->use_pdo = false;
             // Use the mysqli connection from config/database.php
             global $conn;
             $this->conn = $conn;
+            
+            // Verify mysqli connection
+            if (!$this->conn || $this->conn->connect_error) {
+                throw new Exception('Database connection failed: ' . ($this->conn->connect_error ?? 'Unknown error'));
+            }
         }
     }
 
@@ -98,17 +106,74 @@ class BaseAPI {
             return false;
         }
         
-        // For now, we'll use a simple token validation
-        // In production, implement proper JWT verification
-        return true;
+        // For this basic implementation, check if token is base64 encoded user info
+        try {
+            $decoded = base64_decode($token);
+            if ($decoded === false) {
+                // If not base64, check if it's a simple token
+                return !empty($token) && strlen($token) > 10;
+            }
+            
+            // Check if decoded token has the expected format (user_id:email)
+            $parts = explode(':', $decoded);
+            if (count($parts) >= 2 && !empty($parts[0]) && !empty($parts[1])) {
+                return true;
+            }
+            
+            // Fallback - any non-empty token is considered valid for basic auth
+            return !empty($token);
+        } catch (Exception $e) {
+            return false;
+        }
     }
 
     // Get authorization header
     protected function getAuthHeader() {
-        $headers = getallheaders();
-        if (isset($headers['Authorization'])) {
-            return str_replace('Bearer ', '', $headers['Authorization']);
+        // Try multiple ways to get the authorization header
+        $headers = null;
+        
+        // Method 1: getallheaders()
+        if (function_exists('getallheaders')) {
+            $headers = getallheaders();
         }
+        
+        // Method 2: $_SERVER variables
+        if (!$headers) {
+            $headers = [];
+            foreach ($_SERVER as $key => $value) {
+                if (strpos($key, 'HTTP_') === 0) {
+                    $header_key = str_replace(' ', '-', ucwords(str_replace('_', ' ', strtolower(substr($key, 5)))));
+                    $headers[$header_key] = $value;
+                }
+            }
+        }
+        
+        // Look for Authorization header
+        $authHeader = null;
+        foreach (['Authorization', 'authorization', 'AUTHORIZATION'] as $key) {
+            if (isset($headers[$key])) {
+                $authHeader = $headers[$key];
+                break;
+            }
+        }
+        
+        if ($authHeader) {
+            // Remove 'Bearer ' prefix if present
+            if (strpos($authHeader, 'Bearer ') === 0) {
+                return substr($authHeader, 7);
+            }
+            return $authHeader;
+        }
+        
+        // Fallback: check for direct token in headers
+        if (isset($_SERVER['HTTP_AUTHORIZATION'])) {
+            $token = $_SERVER['HTTP_AUTHORIZATION'];
+            if (strpos($token, 'Bearer ') === 0) {
+                return substr($token, 7);
+            }
+            return $token;
+        }
+        
         return null;
     }
 

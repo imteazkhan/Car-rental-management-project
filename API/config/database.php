@@ -1,5 +1,5 @@
 <?php
-define("API_URL", "http://localhost/Imteaz/React/car-rental-management-project/API");
+define("API_URL", "http://localhost/car-rental-management-project/API");
 $conn = new mysqli("localhost", "root", "", "car_rental");
 //error handling
 if ($conn->connect_error) {
