@@ -26,21 +26,21 @@
 
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f5f7fb;
+  background-color: #eeeef0d0;
   color: var(--dark);
   line-height: 1.6;
 }
 
 .admin-container {
   display: flex;
-  min-height: 100vh;
+  min-height: auto;
 }
 
 /* Sidebar Styles */
 .sidebar {
   width: var(--sidebar-width);
   background: white;
-  height: 100vh;
+  height: auto;
   position: fixed;
   transition: var(--transition);
   z-index: 1000;
@@ -75,7 +75,7 @@ body {
   border: none;
   width: 30px;
   height: 30px;
-  border-radius: 50%;
+  border-radius: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -200,7 +200,7 @@ body {
 
 /* Top Header */
 .top-header {
-  background: white;
+  background: rgba(228, 226, 226, 0.623);
   padding: 15px 30px;
   display: flex;
   align-items: center;
@@ -295,7 +295,7 @@ body {
 }
 
 .stat-card {
-  background: white;
+  background: rgba(238, 234, 234, 0.76);
   border-radius: var(--border-radius);
   padding: 25px;
   box-shadow: var(--box-shadow);

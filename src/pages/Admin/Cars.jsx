@@ -11,13 +11,13 @@ const Cars = () => {
   const [pagination, setPagination] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [categories, setCategories] = useState([]);
-  
+
   // Modal states
   const [showAddModal, setShowAddModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
   const [editingCar, setEditingCar] = useState(null);
   const [submitting, setSubmitting] = useState(false);
-  
+
   const { showSuccess, showError } = useNotification();
 
   // Fetch cars
@@ -25,36 +25,36 @@ const Cars = () => {
     try {
       setLoading(true);
       setError(null);
-      
+
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       const response = await fetch(`${API_URL}/cars.php?page=${page}&limit=20`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       });
-      
+
       const responseText = await response.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        throw new Error('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        throw new Error('Invalid response from server');
       }
-      
-      if (data.success) {
+
+      if (response.ok && data.success) {
         setCars(data.data.cars);
         setPagination(data.data.pagination);
       } else {
-        setError(data.message || 'গাড়ি লোড করতে ব্যর্থ');
+        setError(data.message || 'Failed to load cars');
       }
     } catch (err) {
       console.error('Error fetching cars:', err);
-      setError('গাড়ি লোড করতে ব্যর্থ: ' + err.message);
+      setError(`Failed to load cars: ${err.message}`);
     } finally {
       setLoading(false);
     }
@@ -65,32 +65,32 @@ const Cars = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       const response = await fetch(`${API_URL}/cars.php?action=categories`, {
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       });
-      
+
       const responseText = await response.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        throw new Error('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        throw new Error('Invalid response from server');
       }
-      
-      if (data.success) {
+
+      if (response.ok && data.success) {
         setCategories(data.data);
       } else {
-        showError(data.message || 'ক্যাটাগরি লোড করতে ব্যর্থ');
+        showError(data.message || 'Failed to load categories');
       }
     } catch (err) {
       console.error('Error fetching categories:', err);
-      showError('ক্যাটাগরি লোড করতে ব্যর্থ: ' + err.message);
+      showError(`Failed to load categories: ${err.message}`);
     }
   }, [API_URL, showError]);
 
@@ -105,74 +105,74 @@ const Cars = () => {
   }, [currentPage, fetchCars]);
 
   // Handle page change
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-    fetchCars(page);
-  };
+  const handlePageChange = useCallback(
+    (page) => {
+      setCurrentPage(page);
+      fetchCars(page);
+    },
+    [fetchCars]
+  );
 
   // Add car
   const handleAddCar = useCallback(async (formData) => {
     try {
       setSubmitting(true);
-      
+
       // Process features field
       const processedData = { ...formData };
       if (processedData.features && typeof processedData.features === 'string') {
         processedData.features = processedData.features
           .split(',')
-          .map(feature => feature.trim())
-          .filter(feature => feature.length > 0);
+          .map((feature) => feature.trim())
+          .filter((feature) => feature.length > 0);
       }
-      
+
       // Ensure numeric fields are properly typed
       if (processedData.year) processedData.year = parseInt(processedData.year);
       if (processedData.daily_rate) processedData.daily_rate = parseFloat(processedData.daily_rate);
       if (processedData.mileage) processedData.mileage = parseInt(processedData.mileage) || 0;
       if (processedData.seats) processedData.seats = parseInt(processedData.seats) || 5;
       if (processedData.category_id) processedData.category_id = parseInt(processedData.category_id);
-      
+
       // Validate category_id
       if (!processedData.category_id) {
-        throw new Error('ক্যাটাগরি নির্বাচন করা প্রয়োজন');
+        throw new Error('Category selection is required');
       }
-      
+
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       const response = await fetch(`${API_URL}/cars.php`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(processedData)
+        body: JSON.stringify(processedData),
       });
-      
+
       const responseText = await response.text();
-      console.log('Raw response:', responseText);
-      
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        console.error('Response that failed to parse:', responseText);
-        showError('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        showError('Invalid response from server');
         return;
       }
-      
+
       if (response.ok && data.success) {
-        showSuccess(data.message || 'গাড়ি সফলভাবে যোগ করা হয়েছে');
+        showSuccess(data.message || 'Car added successfully');
         setShowAddModal(false);
         fetchCars(currentPage);
       } else {
-        showError(data.message || data.error || 'গাড়ি যোগ করতে ব্যর্থ');
+        showError(data.message || data.error || 'Failed to add car');
       }
     } catch (err) {
       console.error('Error adding car:', err);
-      showError(`গাড়ি যোগ করতে ব্যর্থ: ${err.message}`);
+      showError(`Failed to add car: ${err.message}`);
     } finally {
       setSubmitting(false);
     }
@@ -188,58 +188,58 @@ const Cars = () => {
   const handleUpdateCar = useCallback(async (formData) => {
     try {
       setSubmitting(true);
-      
+
       // Process features field
       const processedData = { ...formData };
       if (processedData.features && typeof processedData.features === 'string') {
         processedData.features = processedData.features
           .split(',')
-          .map(feature => feature.trim())
-          .filter(feature => feature.length > 0);
+          .map((feature) => feature.trim())
+          .filter((feature) => feature.length > 0);
       }
-      
+
       // Ensure numeric fields are properly typed
       if (processedData.year) processedData.year = parseInt(processedData.year);
       if (processedData.daily_rate) processedData.daily_rate = parseFloat(processedData.daily_rate);
       if (processedData.mileage) processedData.mileage = parseInt(processedData.mileage) || 0;
       if (processedData.seats) processedData.seats = parseInt(processedData.seats) || 5;
       if (processedData.category_id) processedData.category_id = parseInt(processedData.category_id);
-      
+
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       const response = await fetch(`${API_URL}/cars.php?id=${editingCar.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(processedData)
+        body: JSON.stringify(processedData),
       });
-      
+
       const responseText = await response.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        showError('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        showError('Invalid response from server');
         return;
       }
-      
+
       if (response.ok && data.success) {
-        showSuccess(data.message || 'গাড়ি সফলভাবে আপডেট করা হয়েছে');
+        showSuccess(data.message || 'Car updated successfully');
         setShowEditModal(false);
         setEditingCar(null);
         fetchCars(currentPage);
       } else {
-        showError(data.message || 'গাড়ি আপডেট করতে ব্যর্থ');
+        showError(data.message || 'Failed to update car');
       }
     } catch (err) {
       console.error('Error updating car:', err);
-      showError('গাড়ি আপডেট করতে ব্যর্থ');
+      showError(`Failed to update car: ${err.message}`);
     } finally {
       setSubmitting(false);
     }
@@ -247,42 +247,42 @@ const Cars = () => {
 
   // Delete car
   const handleDeleteCar = useCallback(async (car) => {
-    if (!window.confirm(`আপনি কি নিশ্চিতভাবে ${car.make} ${car.model} ডিলিট করতে চান?`)) {
+    if (!window.confirm(`Are you sure you want to delete ${car.make} ${car.model}?`)) {
       return;
     }
-    
+
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       const response = await fetch(`${API_URL}/cars.php?id=${car.id}`, {
         method: 'DELETE',
         headers: {
-          'Authorization': `Bearer ${token}`
-        }
+          'Authorization': `Bearer ${token}`,
+        },
       });
-      
+
       const responseText = await response.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        showError('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        showError('Invalid response from server');
         return;
       }
-      
+
       if (response.ok && data.success) {
-        showSuccess(data.message || 'গাড়ি সফলভাবে ডিলিট করা হয়েছে');
+        showSuccess(data.message || 'Car deleted successfully');
         fetchCars(currentPage);
       } else {
-        showError(data.message || 'গাড়ি ডিলিট করতে ব্যর্থ');
+        showError(data.message || 'Failed to delete car');
       }
     } catch (err) {
       console.error('Error deleting car:', err);
-      showError('গাড়ি ডিলিট করতে ব্যর্থ');
+      showError(`Failed to delete car: ${err.message}`);
     }
   }, [currentPage, showSuccess, showError, API_URL]);
 
@@ -291,11 +291,11 @@ const Cars = () => {
     try {
       const token = localStorage.getItem('token');
       if (!token) {
-        throw new Error('কোনো অথেনটিকেশন টোকেন পাওয়া যায়নি');
+        throw new Error('No authentication token found');
       }
-      
+
       let payload = { action, ids: selectedIds };
-      
+
       switch (action) {
         case 'update_status_available':
           payload.action = 'update_car_status';
@@ -306,261 +306,208 @@ const Cars = () => {
           payload.status = 'maintenance';
           break;
         default:
-          showError('ইনভ্যালিড বাল্ক অ্যাকশন');
+          showError('Invalid bulk action');
           return;
       }
-      
+
       const response = await fetch(`${API_URL}/admin.php?action=bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
+          'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(payload)
+        body: JSON.stringify(payload),
       });
-      
+
       const responseText = await response.text();
       let data;
       try {
         data = JSON.parse(responseText);
       } catch (parseError) {
         console.error('JSON Parse Error:', parseError);
-        showError('সার্ভার থেকে অবৈধ রেসপন্স পাওয়া গেছে');
+        showError('Invalid response from server');
         return;
       }
-      
+
       if (response.ok && data.success) {
-        showSuccess(data.message || 'বাল্ক অ্যাকশন সফলভাবে সম্পন্ন');
+        showSuccess(data.message || 'Bulk action completed successfully');
         fetchCars(currentPage);
       } else {
-        showError(data.message || 'বাল্ক অ্যাকশন ব্যর্থ');
+        showError(data.message || 'Bulk action failed');
       }
     } catch (err) {
       console.error('Error performing bulk action:', err);
-      showError('বাল্ক অ্যাকশন ব্যর্থ');
-    }
+      showError(`Bulk action failed: ${err.message}`);
+    } 
   }, [currentPage, showSuccess, showError, API_URL]);
 
   // Table columns
-  const columns = useMemo(() => [
-    {
-      key: 'id',
-      label: 'আইডি',
-      width: '60px',
-      sortable: true
-    },
-    {
-      key: 'make',
-      label: 'মেক',
-      sortable: true
-    },
-    {
-      key: 'model',
-      label: 'মডেল',
-      sortable: true
-    },
-    {
-      key: 'year',
-      label: 'বছর',
-      width: '80px',
-      sortable: true
-    },
-    {
-      key: 'license_plate',
-      label: 'লাইসেন্স প্লেট',
-      width: '120px'
-    },
-    {
-      key: 'daily_rate',
-      label: 'দৈনিক রেট',
-      width: '100px',
-      type: 'currency',
-      sortable: true
-    },
-    {
-      key: 'status',
-      label: 'স্ট্যাটাস',
-      width: '100px',
-      type: 'status',
-      filterable: true,
-      sortable: true
-    },
-    {
-      key: 'category_name',
-      label: 'ক্যাটাগরি',
-      width: '120px',
-      filterable: true
-    }
-  ], []);
+  const columns = useMemo(
+    () => [
+      { key: 'id', label: 'ID', width: '60px', sortable: true },
+      { key: 'make', label: 'Make', sortable: true },
+      { key: 'model', label: 'Model', sortable: true },
+      { key: 'year', label: 'Year', width: '80px', sortable: true },
+      { key: 'license_plate', label: 'License Plate', width: '120px' },
+      { key: 'daily_rate', label: 'Daily Rate', width: '100px', type: 'currency', sortable: true },
+      { key: 'status', label: 'Status', width: '100px', type: 'status', filterable: true, sortable: true },
+      { key: 'category_name', label: 'Category', width: '120px', filterable: true },
+    ],
+    []
+  );
 
   // Form fields for add/edit
-  const formFields = useMemo(() => [
-    {
-      type: 'group',
-      name: 'basic_info',
-      columns: 'two',
-      fields: [
-        {
-          name: 'make',
-          label: 'মেক',
-          type: 'text',
-          required: true,
-          placeholder: 'গাড়ির মেক লিখুন'
-        },
-        {
-          name: 'model',
-          label: 'মডেল',
-          type: 'text',
-          required: true,
-          placeholder: 'গাড়ির মডেল লিখুন'
-        }
-      ]
-    },
-    {
-      type: 'group',
-      name: 'details',
-      columns: 'three',
-      fields: [
-        {
-          name: 'year',
-          label: 'বছর',
-          type: 'number',
-          required: true,
-          min: 1900,
-          max: new Date().getFullYear() + 1
-        },
-        {
-          name: 'color',
-          label: 'রঙ',
-          type: 'text',
-          placeholder: 'গাড়ির রঙ লিখুন'
-        },
-        {
-          name: 'daily_rate',
-          label: 'দৈনিক রেট ($)',
-          type: 'number',
-          required: true,
-          min: 0,
-          step: 0.01
-        }
-      ]
-    },
-    {
-      type: 'group',
-      name: 'identification',
-      columns: 'two',
-      fields: [
-        {
-          name: 'license_plate',
-          label: 'লাইসেন্স প্লেট',
-          type: 'text',
-          required: true,
-          placeholder: 'লাইসেন্স প্লেট লিখুন'
-        },
-        {
-          name: 'vin',
-          label: 'VIN',
-          type: 'text',
-          placeholder: 'গাড়ির VIN নম্বর'
-        }
-      ]
-    },
-    {
-      name: 'category_id',
-      label: 'ক্যাটাগরি',
-      type: 'select',
-      options: categories.map(cat => ({ value: cat.id, label: cat.name })),
-      required: true, // Make category_id required
-      placeholder: 'একটি ক্যাটাগরি নির্বাচন করুন'
-    },
-    {
-      type: 'group',
-      name: 'specifications',
-      columns: 'three',
-      fields: [
-        {
-          name: 'fuel_type',
-          label: 'জ্বালানির ধরন',
-          type: 'select',
-          options: [
-            { value: 'petrol', label: 'পেট্রোল' },
-            { value: 'diesel', label: 'ডিজেল' },
-            { value: 'electric', label: 'ইলেকট্রিক' },
-            { value: 'hybrid', label: 'হাইব্রিড' }
-          ],
-          defaultValue: 'petrol'
-        },
-        {
-          name: 'transmission',
-          label: 'ট্রান্সমিশন',
-          type: 'select',
-          options: [
-            { value: 'manual', label: 'ম্যানুয়াল' },
-            { value: 'automatic', label: 'অটোমেটিক' }
-          ],
-          defaultValue: 'manual'
-        },
-        {
-          name: 'seats',
-          label: 'সিট',
-          type: 'number',
-          min: 1,
-          max: 50,
-          defaultValue: 5
-        }
-      ]
-    },
-    {
-      name: 'mileage',
-      label: 'মাইলেজ',
-      type: 'number',
-      min: 0,
-      placeholder: 'বর্তমান মাইলেজ',
-      defaultValue: 0
-    },
-    {
-      name: 'image_url',
-      label: 'ইমেজ URL',
-      type: 'url',
-      placeholder: 'ইমেজ URL লিখুন'
-    },
-    {
-      name: 'description',
-      label: 'বিবরণ',
-      type: 'textarea',
-      rows: 4,
-      placeholder: 'গাড়ির বিবরণ লিখুন'
-    },
-    {
-      name: 'features',
-      label: 'ফিচার্স (কমা দিয়ে আলাদা করুন)',
-      type: 'textarea',
-      rows: 2,
-      placeholder: 'যেমন, এয়ার কন্ডিশনিং, GPS, ব্লুটুথ, ব্যাকআপ ক্যামেরা',
-      help: 'কমা দিয়ে ফিচার্স আলাদা করুন'
-    }
-  ], [categories]);
+  const formFields = useMemo(
+    () => [
+      {
+        type: 'group',
+        name: 'basic_info',
+        columns: 'two',
+        fields: [
+          { name: 'make', label: 'Make', type: 'text', required: true, placeholder: 'Enter car make' },
+          { name: 'model', label: 'Model', type: 'text', required: true, placeholder: 'Enter car model' },
+        ],
+      },
+      {
+        type: 'group',
+        name: 'details',
+        columns: 'three',
+        fields: [
+          {
+            name: 'year',
+            label: 'Year',
+            type: 'number',
+            required: true,
+            min: 1900,
+            max: new Date().getFullYear() + 1,
+          },
+          { name: 'color', label: 'Color', type: 'text', placeholder: 'Enter car color' },
+          {
+            name: 'daily_rate',
+            label: 'Daily Rate ($)',
+            type: 'number',
+            required: true,
+            min: 0,
+            step: 0.01,
+          },
+        ],
+      },
+      {
+        type: 'group',
+        name: 'identification',
+        columns: 'two',
+        fields: [
+          {
+            name: 'license_plate',
+            label: 'License Plate',
+            type: 'text',
+            required: true,
+            placeholder: 'Enter license plate',
+          },
+          { name: 'vin', label: 'VIN', type: 'text', placeholder: 'Enter car VIN number' },
+        ],
+      },
+      {
+        name: 'category_id',
+        label: 'Category',
+        type: 'select',
+        options: categories.map((cat) => ({ value: cat.id, label: cat.name })),
+        required: true,
+        placeholder: 'Select a category',
+      },
+      {
+        type: 'group',
+        name: 'specifications',
+        columns: 'three',
+        fields: [
+          {
+            name: 'fuel_type',
+            label: 'Fuel Type',
+            type: 'select',
+            options: [
+              { value: 'petrol', label: 'Petrol' },
+              { value: 'diesel', label: 'Diesel' },
+              { value: 'electric', label: 'Electric' },
+              { value: 'hybrid', label: 'Hybrid' },
+            ],
+            defaultValue: 'petrol',
+          },
+          {
+            name: 'transmission',
+            label: 'Transmission',
+            type: 'select',
+            options: [
+              { value: 'manual', label: 'Manual' },
+              { value: 'automatic', label: 'Automatic' },
+            ],
+            defaultValue: 'manual',
+          },
+          {
+            name: 'seats',
+            label: 'Seats',
+            type: 'number',
+            min: 1,
+            max: 50,
+            defaultValue: 5,
+          },
+        ],
+      },
+      {
+        name: 'mileage',
+        label: 'Mileage',
+        type: 'number',
+        min: 0,
+        placeholder: 'Current mileage',
+        defaultValue: 0,
+      },
+      {
+        name: 'image_url',
+        label: 'Image URL',
+        type: 'url',
+        placeholder: 'Enter image URL',
+      },
+      {
+        name: 'description',
+        label: 'Description',
+        type: 'textarea',
+        rows: 4,
+        placeholder: 'Enter car description',
+      },
+      {
+        name: 'features',
+        label: 'Features (comma separated)',
+        type: 'textarea',
+        rows: 2,
+        placeholder: 'e.g., Air Conditioning, GPS, Bluetooth, Backup Camera',
+        help: 'Separate features with commas',
+      },
+    ],
+    [categories]
+  );
 
   // Bulk action buttons
-  const bulkActions = useMemo(() => [
-    {
-      action: 'update_status_available',
-      label: 'উপলব্ধ করুন',
-      icon: 'fas fa-check',
-      variant: 'btn-success'
-    },
-    {
-      action: 'update_status_maintenance',
-      label: 'মেইনটেন্যান্সে রাখুন',
-      icon: 'fas fa-wrench',
-      variant: 'btn-warning'
-    }
-  ], []);
+  const bulkActions = useMemo(
+    () => [
+      {
+        action: 'update_status_available',
+        label: 'Mark as Available',
+        icon: 'fas fa-check',
+        variant: 'btn-success',
+      },
+      {
+        action: 'update_status_maintenance',
+        label: 'Mark as Maintenance',
+        icon: 'fas fa-wrench',
+        variant: 'btn-warning',
+      },
+    ],
+    []
+  );
 
   return (
     <div className="cars-management">
       <DataTable
-        title="গাড়ি ব্যবস্থাপনা"
+        title="Car Management"
         data={cars}
         columns={columns}
         loading={loading}
@@ -584,10 +531,10 @@ const Cars = () => {
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}
         onSubmit={handleAddCar}
-        title="নতুন গাড়ি যোগ করুন"
+        title="Add New Car"
         fields={formFields}
         loading={submitting}
-        submitLabel="গাড়ি যোগ করুন"
+        submitLabel="Add Car"
         size="large"
       />
 
@@ -599,11 +546,11 @@ const Cars = () => {
           setEditingCar(null);
         }}
         onSubmit={handleUpdateCar}
-        title="গাড়ি এডিট করুন"
+        title="Edit Car"
         fields={formFields}
         initialData={editingCar || {}}
         loading={submitting}
-        submitLabel="গাড়ি আপডেট করুন"
+        submitLabel="Update Car"
         size="large"
       />
     </div>

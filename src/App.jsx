@@ -22,6 +22,9 @@ import Users from './pages/Admin/Users'
 import AdminCars from './pages/Admin/Cars'
 import AdminBookings from './pages/Admin/Bookings'
 import AdminSettings from './pages/Admin/Settings'
+import Reports from './pages/Admin/Reports'
+
+
 
 function App() {
   useEffect(() => {
@@ -63,6 +66,7 @@ function App() {
                   <Route path="cars" element={<AdminCars />} />
                   <Route path="bookings" element={<AdminBookings />} />
                   <Route path="settings" element={<AdminSettings />} />
+                  <Route path="reports" element={<Reports />} />
                 </Route>
               </Routes>
             </main>

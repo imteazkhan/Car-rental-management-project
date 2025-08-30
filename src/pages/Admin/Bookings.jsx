@@ -27,23 +27,41 @@ const Bookings = () => {
       setError(null);
       
       const token = localStorage.getItem('token');
+      if (!token) {
+        setError('No authentication token found. Please login again.');
+        setLoading(false);
+        return;
+      }
+      
+      console.log('Fetching admin bookings with token:', token ? 'Yes' : 'No');
+      
       const response = await fetch(`${API_URL}/bookings.php?all=true&page=${page}&limit=20`, {
         headers: {
-          'Authorization': token
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         }
       });
       
+      console.log('Admin bookings response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Admin bookings API response:', data);
       
       if (data.success) {
-        setBookings(data.data.bookings);
+        setBookings(data.data.bookings || []);
         setPagination(data.data.pagination);
+        console.log('Admin bookings loaded successfully:', data.data.bookings?.length || 0, 'bookings');
       } else {
         setError(data.message || 'Failed to fetch bookings');
+        console.error('API returned error:', data.message);
       }
     } catch (err) {
-      console.error('Error fetching bookings:', err);
-      setError('Failed to load bookings');
+      console.error('Error fetching admin bookings:', err);
+      setError('Failed to load bookings: ' + err.message);
     } finally {
       setLoading(false);
     }
@@ -77,16 +95,30 @@ const Bookings = () => {
       setSubmitting(true);
       
       const token = localStorage.getItem('token');
-      const response = await fetch(`${API_URL}/bookings.php?id=${selectedBooking.id}`, {
+      if (!token) {
+        showError('No authentication token found. Please login again.');
+        return;
+      }
+      
+      console.log('Updating booking status:', selectedBooking.booking_id, 'to:', formData.status);
+      
+      const response = await fetch(`${API_URL}/bookings.php?id=${selectedBooking.booking_id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ status: formData.status })
       });
       
+      console.log('Status update response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Status update API response:', data);
       
       if (data.success) {
         showSuccess('Booking status updated successfully');
@@ -98,7 +130,7 @@ const Bookings = () => {
       }
     } catch (err) {
       console.error('Error updating booking status:', err);
-      showError('Failed to update booking status');
+      showError('Failed to update booking status: ' + err.message);
     } finally {
       setSubmitting(false);
     }
@@ -108,6 +140,10 @@ const Bookings = () => {
   const handleBulkAction = async (action, selectedIds) => {
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        showError('No authentication token found. Please login again.');
+        return;
+      }
       
       let payload = { action, ids: selectedIds };
       
@@ -122,16 +158,25 @@ const Bookings = () => {
           return;
       }
       
+      console.log('Performing bulk action:', action, 'on:', selectedIds);
+      
       const response = await fetch(`${API_URL}/admin.php?action=bulk`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': token
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(payload)
       });
       
+      console.log('Bulk action response status:', response.status);
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
+      console.log('Bulk action API response:', data);
       
       if (data.success) {
         showSuccess(data.message || 'Bulk action completed');
@@ -141,7 +186,7 @@ const Bookings = () => {
       }
     } catch (err) {
       console.error('Error performing bulk action:', err);
-      showError('Bulk action failed');
+      showError('Bulk action failed: ' + err.message);
     }
   };
 
@@ -157,27 +202,22 @@ const Bookings = () => {
   // Table columns
   const columns = [
     {
-      key: 'id',
+      key: 'booking_id',
       label: 'ID',
       width: '60px',
       sortable: true
     },
     {
-      key: 'first_name',
+      key: 'username',
       label: 'Customer',
-      render: (value, row) => `${row.first_name} ${row.last_name}`,
+      render: (value, row) => `${row.username} (${row.email})`,
       sortable: true
     },
     {
-      key: 'make',
+      key: 'car_name',
       label: 'Car',
-      render: (value, row) => `${row.make} ${row.model} ${row.year}`,
+      render: (value, row) => `${row.car_name} ${row.car_model}`,
       sortable: true
-    },
-    {
-      key: 'license_plate',
-      label: 'License Plate',
-      width: '120px'
     },
     {
       key: 'start_date',
@@ -200,14 +240,14 @@ const Bookings = () => {
       render: (value, row) => `${calculateDuration(row.start_date, row.end_date)} days`
     },
     {
-      key: 'total_amount',
+      key: 'total_price',
       label: 'Amount',
       width: '100px',
       type: 'currency',
       sortable: true
     },
     {
-      key: 'status',
+      key: 'booking_status',
       label: 'Status',
       width: '100px',
       type: 'status',
@@ -323,16 +363,12 @@ const Bookings = () => {
                 </h3>
                 <div className="info-grid">
                   <div className="info-item">
-                    <label>Name:</label>
-                    <span>{selectedBooking.first_name} {selectedBooking.last_name}</span>
+                    <label>Username:</label>
+                    <span>{selectedBooking.username}</span>
                   </div>
                   <div className="info-item">
                     <label>Email:</label>
                     <span>{selectedBooking.email}</span>
-                  </div>
-                  <div className="info-item">
-                    <label>Phone:</label>
-                    <span>{selectedBooking.phone || 'N/A'}</span>
                   </div>
                 </div>
               </div>
@@ -346,15 +382,23 @@ const Bookings = () => {
                 <div className="info-grid">
                   <div className="info-item">
                     <label>Car:</label>
-                    <span>{selectedBooking.make} {selectedBooking.model} {selectedBooking.year}</span>
+                    <span>{selectedBooking.car_name} {selectedBooking.car_model}</span>
                   </div>
                   <div className="info-item">
-                    <label>License Plate:</label>
-                    <span>{selectedBooking.license_plate}</span>
+                    <label>Price per day:</label>
+                    <span>${selectedBooking.car_rent_price}</span>
                   </div>
                   <div className="info-item">
-                    <label>Color:</label>
-                    <span>{selectedBooking.color || 'N/A'}</span>
+                    <label>Fuel Type:</label>
+                    <span>{selectedBooking.car_fuel_type}</span>
+                  </div>
+                  <div className="info-item">
+                    <label>Transmission:</label>
+                    <span>{selectedBooking.car_transmission}</span>
+                  </div>
+                  <div className="info-item">
+                    <label>Seats:</label>
+                    <span>{selectedBooking.car_seats}</span>
                   </div>
                 </div>
               </div>
@@ -368,7 +412,7 @@ const Bookings = () => {
                 <div className="info-grid">
                   <div className="info-item">
                     <label>Booking ID:</label>
-                    <span>#{selectedBooking.id}</span>
+                    <span>#{selectedBooking.booking_id}</span>
                   </div>
                   <div className="info-item">
                     <label>Start Date:</label>
@@ -383,38 +427,20 @@ const Bookings = () => {
                     <span>{calculateDuration(selectedBooking.start_date, selectedBooking.end_date)} days</span>
                   </div>
                   <div className="info-item">
-                    <label>Pickup Location:</label>
-                    <span>{selectedBooking.pickup_location || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
-                    <label>Dropoff Location:</label>
-                    <span>{selectedBooking.dropoff_location || 'N/A'}</span>
-                  </div>
-                  <div className="info-item">
                     <label>Status:</label>
-                    <span className={`status-badge status-${selectedBooking.status}`}>
-                      {selectedBooking.status}
+                    <span className={`status-badge status-${selectedBooking.booking_status}`}>
+                      {selectedBooking.booking_status}
                     </span>
                   </div>
                   <div className="info-item">
-                    <label>Total Amount:</label>
-                    <span className="amount">${Number(selectedBooking.total_amount).toLocaleString()}</span>
+                    <label>Total Price:</label>
+                    <span className="amount">${Number(selectedBooking.total_price).toLocaleString()}</span>
                   </div>
                 </div>
               </div>
 
               {/* Additional Information */}
-              {selectedBooking.notes && (
-                <div className="details-section full-width">
-                  <h3 className="section-title">
-                    <i className="fas fa-sticky-note"></i>
-                    Notes
-                  </h3>
-                  <div className="notes-content">
-                    {selectedBooking.notes}
-                  </div>
-                </div>
-              )}
+              
             </div>
           </div>
         )}

@@ -1,13 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 import './MyBookings.css'
 import API_URL from '../config';
 import axios from 'axios'
+import jsPDF from 'jspdf';
 
 
 function MyBookings() {
   const location = useLocation();
   const navigate = useNavigate();
+  const { user, token } = useAuth();
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -17,31 +20,20 @@ function MyBookings() {
     fetchBookings();
   }, []);
 
-  useEffect(() => {
-    if (location.state && location.state.newBooking) {
-      const newBooking = location.state.newBooking;
-
-      // Check if booking already exists to prevent duplicates
-      setBookings(prevBookings => {
-        const bookingExists = prevBookings.some(booking => booking.id === newBooking.id);
-        if (!bookingExists) {
-          return [newBooking, ...prevBookings];
-        }
-        return prevBookings;
-      });
-
-      // Clear the location state to prevent re-adding on refresh
-      navigate(location.pathname, { replace: true, state: null });
-    }
-  }, [location.state, navigate, location.pathname]);
+  
 
   const fetchBookings = async () => {
     try {
       setLoading(true);
-      const token = localStorage.getItem('token');
-      const user = JSON.parse(localStorage.getItem('user') || '{}');
       
-      if (!token || !user.id) {
+      // Use AuthContext with localStorage fallback
+      const currentUser = user || JSON.parse(localStorage.getItem('user') || '{}');
+      const currentToken = token || localStorage.getItem('token');
+      
+      console.log('Fetching bookings for user:', currentUser);
+      console.log('Using token:', currentToken ? 'Yes' : 'No');
+      
+      if (!currentToken || !currentUser.id) {
         setError('Please login to view your bookings');
         setLoading(false);
         return;
@@ -49,18 +41,22 @@ function MyBookings() {
 
       const response = await axios.get(`${API_URL}/bookings.php`, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          'Authorization': `Bearer ${currentToken}`,
           'Content-Type': 'application/json'
         }
       });
 
+      console.log('Bookings API response:', response.data);
+      
       if (response.data.success) {
         setBookings(response.data.data.bookings || []);
+        setError(null);
       } else {
         setError(response.data.message || 'Failed to fetch bookings');
       }
     } catch (err) {
       console.error('Error fetching bookings:', err);
+      console.error('Error response:', err.response?.data);
       setError('Failed to load bookings. Please try again.');
     } finally {
       setLoading(false);
@@ -69,8 +65,8 @@ function MyBookings() {
 
   const [selectedBooking, setSelectedBooking] = useState(null)
 
-  const getStatusColor = (status) => {
-    switch (status) {
+  const getStatusColor = (booking_status) => {
+    switch (booking_status) {
       case 'confirmed': return '#27ae60'
       case 'pending': return '#f39c12'
       case 'completed': return '#3498db'
@@ -82,18 +78,18 @@ function MyBookings() {
   const handleCancelBooking = async (bookingId) => {
     if (window.confirm('Are you sure you want to cancel this booking?')) {
       try {
-        const token = localStorage.getItem('token');
-        const response = await axios.put(`${API_URL}/bookings.php?id=${bookingId}&action=cancel`, {}, {
+        const currentToken = token || localStorage.getItem('token');
+        const response = await axios.put(`${API_URL}/bookings.php?booking_id=${bookingId}&action=cancel`, {}, {
           headers: {
-            'Authorization': `Bearer ${token}`,
+            'Authorization': `Bearer ${currentToken}`,
             'Content-Type': 'application/json'
           }
         });
 
         if (response.data.success) {
           setBookings(bookings.map(booking => 
-            booking.id === bookingId 
-              ? { ...booking, status: 'cancelled' }
+            booking.booking_id === bookingId 
+              ? { ...booking, booking_status: 'cancelled' }
               : booking
           ));
           alert('Booking cancelled successfully!');
@@ -111,18 +107,121 @@ function MyBookings() {
     navigate(`/modify-booking/${bookingId}`);
   }
 
-  const canCancel = (status, startDate) => {
+  const handleDownloadInvoice = async (bookingId) => {
+    try {
+      const currentToken = token || localStorage.getItem('token');
+      const response = await axios.get(`${API_URL}/bookings.php?id=${bookingId}&action=invoice`, {
+        headers: {
+          'Authorization': `Bearer ${currentToken}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.data.success) {
+        const invoiceData = response.data.data;
+        
+        // Generate PDF using jsPDF
+        const pdf = new jsPDF();
+        const booking = invoiceData.booking_details;
+        const payment = invoiceData.payment_details;
+        
+        // Set up PDF styling
+        pdf.setFontSize(20);
+        pdf.setFont('helvetica', 'bold');
+        
+        // Header
+        pdf.text('CAR RENTAL INVOICE', 20, 30);
+        
+        // Invoice details
+        pdf.setFontSize(12);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Invoice Number: ${invoiceData.invoice_number}`, 20, 50);
+        pdf.text(`Invoice Date: ${new Date(invoiceData.invoice_date).toLocaleDateString()}`, 20, 60);
+        pdf.text(`Booking ID: #${booking.booking_id}`, 20, 70);
+        
+        // Customer Information
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Customer Information:', 20, 90);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Name: ${booking.username}`, 30, 105);
+        pdf.text(`Email: ${booking.email}`, 30, 115);
+        pdf.text(`Phone: ${booking.phone || 'N/A'}`, 30, 125);
+        
+        // Car Information
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Vehicle Information:', 20, 145);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Vehicle: ${booking.car_name} ${booking.car_model}`, 30, 160);
+        pdf.text(`Fuel Type: ${booking.car_fuel_type || 'N/A'}`, 30, 170);
+        pdf.text(`Transmission: ${booking.car_transmission || 'N/A'}`, 30, 180);
+        pdf.text(`Seats: ${booking.car_seats || 'N/A'}`, 30, 190);
+        
+        // Rental Information
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Rental Information:', 20, 210);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Pick-up Date: ${new Date(booking.start_date).toLocaleDateString()}`, 30, 225);
+        pdf.text(`Return Date: ${new Date(booking.end_date).toLocaleDateString()}`, 30, 235);
+        pdf.text(`Total Days: ${booking.total_days} days`, 30, 245);
+        pdf.text(`Status: ${booking.booking_status.toUpperCase()}`, 30, 255);
+        
+        // Pricing Information
+        pdf.setFont('helvetica', 'bold');
+        pdf.text('Pricing Details:', 20, 275);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`Daily Rate: $${parseFloat(booking.car_rent_price).toFixed(2)}`, 30, 290);
+        pdf.text(`Number of Days: ${booking.total_days}`, 30, 300);
+        pdf.text(`Subtotal: $${(parseFloat(booking.car_rent_price) * booking.total_days).toFixed(2)}`, 30, 310);
+        
+        // Total
+        pdf.setFont('helvetica', 'bold');
+        pdf.setFontSize(14);
+        pdf.text(`TOTAL AMOUNT: $${parseFloat(booking.total_price).toFixed(2)}`, 30, 330);
+        
+        // Payment Information (if available)
+        let footerY = 350;
+        if (payment) {
+          pdf.setFontSize(12);
+          pdf.setFont('helvetica', 'bold');
+          pdf.text('Payment Information:', 20, 350);
+          pdf.setFont('helvetica', 'normal');
+          pdf.text(`Payment Method: ${payment.payment_method || 'N/A'}`, 30, 365);
+          pdf.text(`Transaction ID: ${payment.transaction_id || 'N/A'}`, 30, 375);
+          pdf.text(`Payment Status: ${payment.status || 'N/A'}`, 30, 385);
+          footerY = 410;
+        }
+        
+        // Footer
+        pdf.setFontSize(10);
+        pdf.setFont('helvetica', 'italic');
+        pdf.text('Thank you for choosing our car rental service!', 20, footerY);
+        pdf.text('For any questions, please contact our customer service.', 20, footerY + 10);
+        
+        // Download the PDF
+        pdf.save(`invoice-${invoiceData.invoice_number}-booking-${bookingId}.pdf`);
+        
+        alert('Invoice downloaded successfully!');
+      } else {
+        alert(response.data.message || 'Failed to fetch invoice');
+      }
+    } catch (err) {
+      console.error('Error fetching invoice:', err);
+      alert('Failed to fetch invoice. Please try again.');
+    }
+  };
+
+  const canCancel = (booking_status, startDate) => {
     const today = new Date()
     const start = new Date(startDate)
     const daysDiff = (start - today) / (1000 * 60 * 60 * 24)
-    return status === 'confirmed' && daysDiff > 1
+    return booking_status === 'confirmed' && daysDiff > 1
   }
 
-  const canModify = (status, startDate) => {
+  const canModify = (booking_status, startDate) => {
     const today = new Date()
     const start = new Date(startDate)
     const daysDiff = (start - today) / (1000 * 60 * 60 * 24)
-    return (status === 'confirmed' || status === 'pending') && daysDiff > 1
+    return (booking_status === 'confirmed' || booking_status === 'pending') && daysDiff > 1
   }
 
   return (
@@ -149,14 +248,14 @@ function MyBookings() {
         ) : (
           <div className="bookings-list">
             {bookings.map((booking, index) => (
-              <div key={booking.id} className="booking-card" data-aos="fade-up" data-aos-delay={index * 100}>
+              <div key={booking.booking_id} className="booking-card" data-aos="fade-up" data-aos-delay={index * 100}>
                 <div className="booking-header">
-                  <div className="booking-id">Booking #{booking.id}</div>
+                  <div className="booking-id">Booking #{booking.booking_id}</div>
                   <div
                     className="booking-status"
-                    style={{ backgroundColor: getStatusColor(booking.status) }}
+                    style={{ backgroundColor: getStatusColor(booking.booking_status) }}
                   >
-                    {booking.status.toUpperCase()}
+                    {(booking.booking_status || booking.status).toUpperCase()}
                   </div>
                 </div>
 
@@ -190,25 +289,25 @@ function MyBookings() {
                         <span>${booking.price_per_day || booking.pricePerDay}/day × {booking.total_days || booking.totalDays} days</span>
                       </div>
                       <div className="total-amount">
-                        Total: ${booking.total_amount || booking.totalAmount}
+                        Total: ${booking.total_price || booking.totalAmount}
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="booking-actions">
-                  {canModify(booking.status, booking.start_date || booking.startDate) && (
+                  {canModify(booking.booking_status, booking.start_date || booking.startDate) && (
                     <button
                       className="modify-btn"
-                      onClick={() => handleModifyBooking(booking.id)}
+                      onClick={() => handleModifyBooking(booking.booking_id)}
                     >
                       Modify
                     </button>
                   )}
-                  {canCancel(booking.status, booking.start_date || booking.startDate) && (
+                  {canCancel(booking.booking_status, booking.start_date || booking.startDate) && (
                     <button
                       className="cancel-btn"
-                      onClick={() => handleCancelBooking(booking.id)}
+                      onClick={() => handleCancelBooking(booking.booking_id)}
                     >
                       Cancel
                     </button>
@@ -218,6 +317,12 @@ function MyBookings() {
                     onClick={() => setSelectedBooking(booking)}
                   >
                     View Details
+                  </button>
+                  <button
+                    className="download-invoice-btn"
+                    onClick={() => handleDownloadInvoice(booking.booking_id)}
+                  >
+                    Download Invoice
                   </button>
                 </div>
               </div>
@@ -250,15 +355,15 @@ function MyBookings() {
 
               <div className="modal-info">
                 <h3>{selectedBooking.car_name || selectedBooking.carName}</h3>
-                <div className="booking-status-badge" style={{ backgroundColor: getStatusColor(selectedBooking.status) }}>
-                  {selectedBooking.status.toUpperCase()}
+                <div className="booking-status-badge" style={{ backgroundColor: getStatusColor(selectedBooking.booking_status) }}>
+                  {(selectedBooking.booking_status || selectedBooking.status).toUpperCase()}
                 </div>
               </div>
 
               <div className="modal-details-grid">
                 <div className="detail-item">
                   <span className="detail-label">Booking ID:</span>
-                  <span className="detail-value">#{selectedBooking.id}</span>
+                  <span className="detail-value">#{selectedBooking.booking_id}</span>
                 </div>
                 <div className="detail-item">
                   <span className="detail-label">Booked on:</span>
@@ -282,7 +387,7 @@ function MyBookings() {
                 </div>
                 <div className="detail-item total-amount">
                   <span className="detail-label">Total Amount:</span>
-                  <span className="detail-value">${selectedBooking.total_amount || selectedBooking.totalAmount}</span>
+                  <span className="detail-value">${selectedBooking.total_price || selectedBooking.totalAmount}</span>
                 </div>
               </div>
 

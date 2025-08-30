@@ -117,3 +117,1121 @@ Stack trace:
 [25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Token: Present
 [25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Received data: {"make":"byd","model":"seal","year":2022,"color":"black","daily_rate":25,"license_plate":"546213879","vin":"236547","category_id":3,"fuel_type":"electric","transmission":"automatic","seats":4,"mileage":1234,"image_url":"","description":"","features":["AC","GPS","Camera","Car Play"]}
 [25-Aug-2025 08:58:43 Europe/Berlin] AddCar - Success: Car ID 5
+[26-Aug-2025 06:01:10 Europe/Berlin] AddCar - Token: Present
+[26-Aug-2025 06:01:10 Europe/Berlin] AddCar - Received data: {"make":"byd","model":"seal07","year":2025,"color":"white","daily_rate":20,"license_plate":"byd12453","vin":"2221","category_id":3,"fuel_type":"electric","transmission":"automatic","seats":5,"mileage":"","image_url":"","description":"","features":""}
+[26-Aug-2025 06:01:10 Europe/Berlin] AddCar - Success: Car ID 6
+[26-Aug-2025 08:43:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(573): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 08:43:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(573): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 08:43:36 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(573): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 08:43:36 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(573): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 08:44:44 Europe/Berlin] Creating user with data: {"username":"devil","email":"devil@gmail.com","password":"A12@345a","first_name":"aa","last_name":"bb","phone":"01401775566","date_of_birth":"2003-08-20","address":"","license_number":"","role":"customer"}
+[26-Aug-2025 08:44:44 Europe/Berlin] User created successfully with ID: 8
+[26-Aug-2025 09:06:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'booking_status' in 'where clause' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:231
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(231): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(585): BookingsAPI->createBooking()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 231
+[26-Aug-2025 09:11:13 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:11:13 Europe/Berlin] Token received: Yes (length: 12)
+[26-Aug-2025 09:11:13 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => email
+)
+
+[26-Aug-2025 09:11:13 Europe/Berlin] Authenticated user ID: 1
+[26-Aug-2025 09:11:13 Europe/Berlin] Request data received: {"car_id":1,"start_date":"2025-01-15","end_date":"2025-01-18","total_price":240}
+[26-Aug-2025 09:11:13 Europe/Berlin] Sanitized data: {"car_id":"1","start_date":"2025-01-15","end_date":"2025-01-18","total_price":"240"}
+[26-Aug-2025 09:11:13 Europe/Berlin] Validating dates - start: 2025-01-15, end: 2025-01-18
+[26-Aug-2025 09:11:26 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:11:26 Europe/Berlin] Token received: Yes (length: 12)
+[26-Aug-2025 09:11:26 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => email
+)
+
+[26-Aug-2025 09:11:26 Europe/Berlin] Authenticated user ID: 1
+[26-Aug-2025 09:11:26 Europe/Berlin] Request data received: {"car_id":1,"start_date":"2025-12-15","end_date":"2025-12-18","total_price":240}
+[26-Aug-2025 09:11:26 Europe/Berlin] Sanitized data: {"car_id":"1","start_date":"2025-12-15","end_date":"2025-12-18","total_price":"240"}
+[26-Aug-2025 09:11:26 Europe/Berlin] Validating dates - start: 2025-12-15, end: 2025-12-18
+[26-Aug-2025 09:11:26 Europe/Berlin] Checking car availability for car_id: 1
+[26-Aug-2025 09:11:26 Europe/Berlin] BOOKING ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'booking_status' in 'where clause'
+[26-Aug-2025 09:11:26 Europe/Berlin] BOOKING ERROR TRACE: #0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(246): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(615): BookingsAPI->createBooking()
+#2 {main}
+[26-Aug-2025 09:12:50 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:12:50 Europe/Berlin] Token received: Yes (length: 12)
+[26-Aug-2025 09:12:50 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => email
+)
+
+[26-Aug-2025 09:12:50 Europe/Berlin] Authenticated user ID: 1
+[26-Aug-2025 09:12:50 Europe/Berlin] Request data received: {"car_id":1,"start_date":"2025-12-15","end_date":"2025-12-18","total_price":240}
+[26-Aug-2025 09:12:50 Europe/Berlin] Sanitized data: {"car_id":"1","start_date":"2025-12-15","end_date":"2025-12-18","total_price":"240"}
+[26-Aug-2025 09:12:50 Europe/Berlin] Validating dates - start: 2025-12-15, end: 2025-12-18
+[26-Aug-2025 09:12:50 Europe/Berlin] Checking car availability for car_id: 1
+[26-Aug-2025 09:12:50 Europe/Berlin] BOOKING ERROR: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'booking_id' in 'field list'
+[26-Aug-2025 09:12:50 Europe/Berlin] BOOKING ERROR TRACE: #0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(246): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(615): BookingsAPI->createBooking()
+#2 {main}
+[26-Aug-2025 09:13:48 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:13:48 Europe/Berlin] Token received: Yes (length: 12)
+[26-Aug-2025 09:13:48 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => email
+)
+
+[26-Aug-2025 09:13:48 Europe/Berlin] Authenticated user ID: 1
+[26-Aug-2025 09:13:48 Europe/Berlin] Request data received: {"car_id":1,"start_date":"2025-12-15","end_date":"2025-12-18","total_price":240}
+[26-Aug-2025 09:13:48 Europe/Berlin] Sanitized data: {"car_id":"1","start_date":"2025-12-15","end_date":"2025-12-18","total_price":"240"}
+[26-Aug-2025 09:13:48 Europe/Berlin] Validating dates - start: 2025-12-15, end: 2025-12-18
+[26-Aug-2025 09:13:48 Europe/Berlin] Checking car availability for car_id: 1
+[26-Aug-2025 09:13:48 Europe/Berlin] Getting car details for car_id: 1
+[26-Aug-2025 09:14:22 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:14:22 Europe/Berlin] Token received: Yes (length: 12)
+[26-Aug-2025 09:14:22 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 1
+    [1] => 2
+    [2] => email
+)
+
+[26-Aug-2025 09:14:22 Europe/Berlin] Authenticated user ID: 1
+[26-Aug-2025 09:14:22 Europe/Berlin] Request data received: {"car_id":6,"start_date":"2025-12-15","end_date":"2025-12-18","total_price":240}
+[26-Aug-2025 09:14:22 Europe/Berlin] Sanitized data: {"car_id":"6","start_date":"2025-12-15","end_date":"2025-12-18","total_price":"240"}
+[26-Aug-2025 09:14:22 Europe/Berlin] Validating dates - start: 2025-12-15, end: 2025-12-18
+[26-Aug-2025 09:14:22 Europe/Berlin] Checking car availability for car_id: 6
+[26-Aug-2025 09:14:22 Europe/Berlin] Getting car details for car_id: 6
+[26-Aug-2025 09:14:22 Europe/Berlin] Calculated booking details - days: 3, total_price: 240
+[26-Aug-2025 09:14:22 Europe/Berlin] Creating booking with user_id: 1, car_id: 6
+[26-Aug-2025 09:14:22 Europe/Berlin] Booking created successfully with ID: 1
+[26-Aug-2025 09:18:02 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:18:02 Europe/Berlin] Token received: Yes (length: 24)
+[26-Aug-2025 09:18:02 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:18:02 Europe/Berlin] Authenticated user ID: 8
+[26-Aug-2025 09:18:02 Europe/Berlin] Request data received: {"car_id":5,"start_date":"2025-08-27","end_date":"2025-08-29","total_price":116,"payment_method":"Credit Card"}
+[26-Aug-2025 09:18:02 Europe/Berlin] Sanitized data: {"car_id":"5","start_date":"2025-08-27","end_date":"2025-08-29","total_price":"116","payment_method":"Credit Card"}
+[26-Aug-2025 09:18:02 Europe/Berlin] Validating dates - start: 2025-08-27, end: 2025-08-29
+[26-Aug-2025 09:18:02 Europe/Berlin] Checking car availability for car_id: 5
+[26-Aug-2025 09:18:02 Europe/Berlin] Getting car details for car_id: 5
+[26-Aug-2025 09:18:02 Europe/Berlin] Calculated booking details - days: 2, total_price: 116
+[26-Aug-2025 09:18:02 Europe/Berlin] Creating booking with user_id: 8, car_id: 5
+[26-Aug-2025 09:18:02 Europe/Berlin] Booking created successfully with ID: 2
+[26-Aug-2025 09:18:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:65
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(65): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(610): BookingsAPI->getUserBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 65
+[26-Aug-2025 09:18:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:65
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(65): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(610): BookingsAPI->getUserBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 65
+[26-Aug-2025 09:31:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(608): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:31:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(608): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:31:13 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(608): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:31:13 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(608): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:32:09 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[26-Aug-2025 09:32:09 Europe/Berlin] Token received: Yes (length: 24)
+[26-Aug-2025 09:32:09 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:32:09 Europe/Berlin] Authenticated user ID: 8
+[26-Aug-2025 09:32:09 Europe/Berlin] Request data received: {"car_id":5,"start_date":"2025-08-27","end_date":"2025-08-29","total_price":116,"payment_method":"Credit Card"}
+[26-Aug-2025 09:32:09 Europe/Berlin] Sanitized data: {"car_id":"5","start_date":"2025-08-27","end_date":"2025-08-29","total_price":"116","payment_method":"Credit Card"}
+[26-Aug-2025 09:32:09 Europe/Berlin] Validating dates - start: 2025-08-27, end: 2025-08-29
+[26-Aug-2025 09:32:09 Europe/Berlin] Checking car availability for car_id: 5
+[26-Aug-2025 09:32:09 Europe/Berlin] Getting car details for car_id: 5
+[26-Aug-2025 09:32:09 Europe/Berlin] Calculated booking details - days: 2, total_price: 116
+[26-Aug-2025 09:32:09 Europe/Berlin] Creating booking with user_id: 8, car_id: 5
+[26-Aug-2025 09:32:09 Europe/Berlin] Booking created successfully with ID: 3
+[26-Aug-2025 09:32:22 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:419
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(419): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(603): BookingsAPI->generateInvoice('3')
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 419
+[26-Aug-2025 09:33:12 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:419
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(419): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(603): BookingsAPI->generateInvoice('3')
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 419
+[26-Aug-2025 09:35:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:419
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(419): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(603): BookingsAPI->generateInvoice('3')
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 419
+[26-Aug-2025 09:44:22 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:419
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(419): PDOStatement->execute()
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(603): BookingsAPI->generateInvoice('1')
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 419
+[26-Aug-2025 09:45:04 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:45:04 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:45:04 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 1
+    [1] => 19email
+)
+
+[26-Aug-2025 09:45:04 Europe/Berlin] Fetching invoice for booking_id: 1, user_id: 1
+[26-Aug-2025 09:45:04 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:45:04 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:45:04 Europe/Berlin] Invoice generated successfully for booking: 1
+[26-Aug-2025 09:45:04 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:45:44 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:45:44 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:45:44 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:45:44 Europe/Berlin] Fetching invoice for booking_id: 3, user_id: 8
+[26-Aug-2025 09:45:44 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:45:44 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:45:44 Europe/Berlin] Invoice generated successfully for booking: 3
+[26-Aug-2025 09:45:44 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:46:05 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:46:05 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:46:05 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:46:05 Europe/Berlin] Fetching invoice for booking_id: 3, user_id: 8
+[26-Aug-2025 09:46:05 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:46:05 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:46:05 Europe/Berlin] Invoice generated successfully for booking: 3
+[26-Aug-2025 09:46:05 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:47:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:47:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:52:25 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:52:25 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:52:25 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:52:25 Europe/Berlin] Fetching invoice for booking_id: 3, user_id: 8
+[26-Aug-2025 09:52:25 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:52:25 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:52:25 Europe/Berlin] Invoice generated successfully for booking: 3
+[26-Aug-2025 09:52:25 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:56:39 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:56:39 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:56:39 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 1
+    [1] => 19email
+)
+
+[26-Aug-2025 09:56:39 Europe/Berlin] Fetching invoice for booking_id: 1, user_id: 1
+[26-Aug-2025 09:56:39 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:56:39 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:56:39 Europe/Berlin] Invoice generated successfully for booking: 1
+[26-Aug-2025 09:56:39 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:57:13 Europe/Berlin] === GENERATE INVOICE DEBUG START ===
+[26-Aug-2025 09:57:13 Europe/Berlin] Token for invoice: Yes
+[26-Aug-2025 09:57:13 Europe/Berlin] Invoice token parts: Array
+(
+    [0] => 8
+    [1] => devil@gmail.com
+)
+
+[26-Aug-2025 09:57:13 Europe/Berlin] Fetching invoice for booking_id: 3, user_id: 8
+[26-Aug-2025 09:57:13 Europe/Berlin] Booking found: Yes
+[26-Aug-2025 09:57:13 Europe/Berlin] Note: Payments table not found or accessible, continuing without payment details
+[26-Aug-2025 09:57:13 Europe/Berlin] Invoice generated successfully for booking: 3
+[26-Aug-2025 09:57:13 Europe/Berlin] === GENERATE INVOICE DEBUG END ===
+[26-Aug-2025 09:58:33 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:58:33 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:58:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:58:40 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[26-Aug-2025 09:58:40 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 05:27:40 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 05:27:40 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 05:27:44 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 05:27:44 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:05:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:05:45 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:06:28 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:06:28 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:27:56 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:27:56 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:31:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:31:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:31:21 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:31:21 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:34:55 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:34:55 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:34:58 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 06:34:58 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:25 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:25 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:30 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:30 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 07:59:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:50 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:50 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:53 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:54 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:57 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:05:57 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:04 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:04 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:06 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:06 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:08 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:08 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:09 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:12:12 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:13:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:14 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:14 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:14 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:15 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 08:15:16 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 09:14:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[27-Aug-2025 09:14:34 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:36:41 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:36:41 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:00 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:00 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:05 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:05 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 05:55:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:05:39 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:05:39 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:26 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:26 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:28 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:28 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:43:29 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:04 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:08 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:08 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:10 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:11 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:48:20 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:50:33 Europe/Berlin] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S22]: Column not found: 1054 Unknown column 'b.booking_id' in 'field list' in D:\xampp\htdocs\car-rental-management-project\API\bookings.php:155
+Stack trace:
+#0 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(155): PDOStatement->execute(Array)
+#1 D:\xampp\htdocs\car-rental-management-project\API\bookings.php(678): BookingsAPI->getAllBookings()
+#2 {main}
+  thrown in D:\xampp\htdocs\car-rental-management-project\API\bookings.php on line 155
+[30-Aug-2025 06:51:44 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:51:44 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:51:44 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:51:44 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:51:44 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:51:44 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:51:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:51:48 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:51:48 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:51:48 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:51:48 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:51:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:51:57 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:51:57 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:51:57 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:51:57 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:51:57 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:51:57 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:52:06 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:52:06 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:52:06 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:52:06 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:52:06 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:52:06 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:52:13 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:52:13 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:52:13 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:52:13 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:52:13 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:52:13 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:52:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:52:28 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:52:28 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 06:52:28 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 06:52:28 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:52:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:52:30 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:52:30 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:52:30 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 1
+    [1] => 19email
+)
+
+[30-Aug-2025 06:52:30 Europe/Berlin] Admin accessing all bookings with user_id: 1
+[30-Aug-2025 06:52:30 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:52:30 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:40 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:40 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:40 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:40 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:40 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:40 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:40 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:40 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:40 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:40 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:40 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:40 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:48 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:48 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:48 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:48 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:48 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:48 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:48 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:48 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:48 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:52 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:52 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:52 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:52 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:52 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:52 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:52 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:52 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:52 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:52 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:52 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:52 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:55 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:55 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:55 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:55 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:55 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:55 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:54:55 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 06:54:55 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 06:54:55 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 06:54:55 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 06:54:55 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 06:54:55 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 06:56:11 Europe/Berlin] AddCar - Token: Present
+[30-Aug-2025 06:56:11 Europe/Berlin] AddCar - Received data: {"make":"audi","model":"a4","year":2024,"color":"white","daily_rate":20,"license_plate":"Audi400","vin":"2012","category_id":2,"fuel_type":"hybrid","transmission":"automatic","seats":4,"mileage":12120,"image_url":"","description":"","features":""}
+[30-Aug-2025 06:56:11 Europe/Berlin] AddCar - Success: Car ID 7
+[30-Aug-2025 07:09:10 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:09:10 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:09:10 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 07:09:10 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 07:09:10 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:09:10 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 07:09:10 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:09:10 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:09:10 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 07:09:10 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 07:09:10 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:09:10 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 07:11:21 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:11:21 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:11:21 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 07:11:21 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 07:11:21 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:11:21 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 07:11:21 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:11:21 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:11:21 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 2
+    [1] => admin1@gmail.com
+)
+
+[30-Aug-2025 07:11:21 Europe/Berlin] Admin accessing all bookings with user_id: 2
+[30-Aug-2025 07:11:21 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:11:21 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 07:55:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:55:28 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:55:28 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 07:55:28 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 07:55:28 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:55:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 07:55:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 07:55:28 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 07:55:28 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 07:55:28 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 07:55:28 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 07:55:28 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 08:02:12 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 08:02:12 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 08:02:12 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 08:02:12 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 08:02:12 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 08:02:12 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 08:02:12 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[30-Aug-2025 08:02:12 Europe/Berlin] Token for getAllBookings: Yes
+[30-Aug-2025 08:02:12 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[30-Aug-2025 08:02:12 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[30-Aug-2025 08:02:12 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[30-Aug-2025 08:02:12 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Token: Present
+[30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Received data: {"make":"vw","model":"a5","year":2020,"color":"white","daily_rate":15,"license_plate":"vw12548","vin":"2541","category_id":1,"fuel_type":"diesel","transmission":"manual","seats":4,"mileage":1200,"image_url":"","description":"","features":""}
+[30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Success: Car ID 8

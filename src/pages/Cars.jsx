@@ -1,16 +1,58 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { allCars } from '../data/carsData';
+import API_URL from '../config';
 import './Cars.css'
 
 function Cars() {
   const navigate = useNavigate();
+  const [cars, setCars] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [filters, setFilters] = useState({
     priceRange: 'all',
     carType: 'all',
     transmission: 'all',
     sortBy: 'price-low'
-  })
+  });
+
+  // Fetch cars and categories from API
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Fetch cars
+        const carsResponse = await fetch(`${API_URL}/cars.php`);
+        const carsData = await carsResponse.json();
+        
+        console.log('Cars API response:', carsData);
+        
+        if (carsResponse.ok && carsData.success) {
+          setCars(carsData.data.cars || []);
+        } else {
+          setError(carsData.message || 'Failed to load cars');
+        }
+        
+        // Fetch categories (no auth needed for public access)
+        const categoriesResponse = await fetch(`${API_URL}/cars.php?action=categories`);
+        const categoriesData = await categoriesResponse.json();
+        
+        if (categoriesResponse.ok && categoriesData.success) {
+          setCategories(categoriesData.data || []);
+        }
+        
+      } catch (err) {
+        console.error('Error fetching data:', err);
+        setError('Failed to load cars. Please try again.');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
 
 
@@ -21,23 +63,46 @@ function Cars() {
     }))
   }
 
-  const filteredCars = allCars.filter(car => {
+  const filteredCars = cars.filter(car => {
     if (filters.priceRange !== 'all') {
       const [min, max] = filters.priceRange.split('-').map(Number)
-      if (max && (car.price < min || car.price > max)) return false
-      if (!max && car.price < min) return false
+      const carPrice = parseFloat(car.daily_rate || car.price || 0);
+      if (max && (carPrice < min || carPrice > max)) return false
+      if (!max && carPrice < min) return false
     }
-    if (filters.carType !== 'all' && car.type !== filters.carType) return false
-    if (filters.transmission !== 'all' && car.transmission !== filters.transmission) return false
+    
+    // Use category_name from the API response
+    const carType = car.category_name || car.category || car.type || '';
+    if (filters.carType !== 'all' && carType.toLowerCase() !== filters.carType) return false
+    
+    const transmission = car.transmission || '';
+    if (filters.transmission !== 'all' && transmission.toLowerCase() !== filters.transmission) return false
+    
     return true
   })
 
   const sortedCars = [...filteredCars].sort((a, b) => {
     switch (filters.sortBy) {
-      case 'price-low': return a.price - b.price
-      case 'price-high': return b.price - a.price
-      case 'rating': return b.rating - a.rating
-      case 'name': return a.name.localeCompare(b.name)
+      case 'price-low': {
+        const priceA = parseFloat(a.daily_rate || a.price || 0);
+        const priceB = parseFloat(b.daily_rate || b.price || 0);
+        return priceA - priceB;
+      }
+      case 'price-high': {
+        const priceA = parseFloat(a.daily_rate || a.price || 0);
+        const priceB = parseFloat(b.daily_rate || b.price || 0);
+        return priceB - priceA;
+      }
+      case 'rating': {
+        const ratingA = parseFloat(a.rating || 0);
+        const ratingB = parseFloat(b.rating || 0);
+        return ratingB - ratingA;
+      }
+      case 'name': {
+        const nameA = `${a.make || ''} ${a.model || ''}` || a.name || '';
+        const nameB = `${b.make || ''} ${b.model || ''}` || b.name || '';
+        return nameA.localeCompare(nameB);
+      }
       default: return 0
     }
   })
@@ -74,9 +139,11 @@ function Cars() {
               onChange={(e) => handleFilterChange('carType', e.target.value)}
             >
               <option value="all">All Types</option>
-              <option value="sedan">Sedan</option>
-              <option value="suv">SUV</option>
-              <option value="sports">Sports</option>
+              {categories.map(category => (
+                <option key={category.id} value={category.name.toLowerCase()}>
+                  {category.name}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -106,45 +173,78 @@ function Cars() {
           </div>
         </div>
 
+        {/* Loading State */}
+        {loading && (
+          <div className="loading-state" data-aos="fade-up">
+            <p>Loading cars...</p>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && (
+          <div className="error-state" data-aos="fade-up">
+            <p>{error}</p>
+          </div>
+        )}
+
         {/* Results Count */}
-        <div className="results-info" data-aos="fade-right">
-          <p>Showing {sortedCars.length} of {allCars.length} cars</p>
-        </div>
+        {!loading && !error && (
+          <div className="results-info" data-aos="fade-right">
+            <p>Showing {sortedCars.length} of {cars.length} cars</p>
+          </div>
+        )}
 
         {/* Cars Grid */}
-        <div className="cars-grid">
-          {sortedCars.map((car, index) => (
-            <div 
-              key={car.id} 
-              className="car-card" 
-              onClick={() => handleBooking(car.id)} 
-              data-aos="flip-left" 
-              data-aos-delay={index * 100}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src={car.image} alt={car.name} />
-              <div className="car-info">
-                <h3>{car.name}</h3>
-                <div className="car-meta">
-                  <span className="car-type">{car.type.toUpperCase()}</span>
-                  <span className="rating">★ {car.rating}</span>
+        {!loading && !error && (
+          <div className="cars-grid">
+            {sortedCars.map((car, index) => {
+              const carName = `${car.make || ''} ${car.model || ''}`.trim() || car.name || 'Unknown Car';
+              const carPrice = parseFloat(car.daily_rate || car.price || 0);
+              const carImage = car.image_url || car.image || '/default-car-image.jpg';
+              const carType = car.category_name || car.category || car.type || 'Unknown';
+              const carRating = parseFloat(car.rating || 4.0);
+              const carFeatures = car.features ? (typeof car.features === 'string' ? car.features.split(',') : car.features) : [];
+              
+              return (
+                <div 
+                  key={car.id} 
+                  className="car-card" 
+                  onClick={() => handleBooking(car.id)} 
+                  data-aos="flip-left" 
+                  data-aos-delay={index * 100}
+                  style={{ cursor: 'pointer' }}
+                >
+                  <img src={carImage} alt={carName} onError={(e) => {
+                    e.target.src = '/default-car-image.jpg';
+                  }} />
+                  <div className="car-info">
+                    <h3>{carName}</h3>
+                    <div className="car-meta">
+                      <span className="car-type">{carType.toUpperCase()}</span>
+                      <span className="rating">★ {carRating.toFixed(1)}</span>
+                    </div>
+                    <p className="price">${carPrice}/day</p>
+                    {carFeatures.length > 0 && (
+                      <div className="features">
+                        {carFeatures.slice(0, 3).map((feature, idx) => (
+                          <span key={idx} className="feature">{feature.trim()}</span>
+                        ))}
+                      </div>
+                    )}
+                    {car.transmission && (
+                      <div className="transmission">
+                        <span>{car.transmission.charAt(0).toUpperCase() + car.transmission.slice(1)}</span>
+                      </div>
+                    )}
+                    <div className="view-details">
+                      <span>Click to view details</span>
+                    </div>
+                  </div>
                 </div>
-                <p className="price">${car.price}/day</p>
-                <div className="features">
-                  {car.features.map((feature, index) => (
-                    <span key={index} className="feature">{feature}</span>
-                  ))}
-                </div>
-                <div className="transmission">
-                  <span>{car.transmission.charAt(0).toUpperCase() + car.transmission.slice(1)}</span>
-                </div>
-                <div className="view-details">
-                  <span>Click to view details</span>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+              );
+            })}
+          </div>
+        )}
 
         {sortedCars.length === 0 && (
           <div className="no-results" data-aos="fade-up">

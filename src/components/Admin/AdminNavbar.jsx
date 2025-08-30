@@ -53,6 +53,11 @@ const AdminNavbar = ({ isOpen, setIsOpen }) => {
             </Link>
           </li>
           <li className="admin-sidebar-item">
+            <Link to="/admin/reports" className="admin-sidebar-link" onClick={toggleSidebar}>
+              <i className="fas fa-chart-line"></i> Reports
+            </Link>
+          </li>
+          <li className="admin-sidebar-item">
             <Link to="/admin/settings" className="admin-sidebar-link" onClick={toggleSidebar}>
               <i className="fas fa-cog"></i> Settings
             </Link>

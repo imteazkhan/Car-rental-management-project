@@ -1,0 +1,41 @@
+.reports-page {
+  padding: 20px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.stat-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-card h4 {
+  margin-bottom: 10px;
+}
+
+.chart-container {
+  margin-bottom: 30px;
+}
+
+.utilization-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.utilization-table th,
+.utilization-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.utilization-table th {
+  background-color: #f2f2f2;
+  text-align: left;
+}
