@@ -225,7 +225,7 @@ function CarDetails() {
           <div className="left-section">
             {/* Large Car Image */}
             <div className="car-image-section" data-aos="zoom-in">
-              <img src={car.image} alt={car.name} className="main-car-image" />
+              <img src={car.image_url} alt={car.name} className="main-car-image" />
             </div>
 
             {/* Car Information Below Image */}

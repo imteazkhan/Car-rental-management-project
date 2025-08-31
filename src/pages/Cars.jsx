@@ -200,7 +200,7 @@ function Cars() {
             {sortedCars.map((car, index) => {
               const carName = `${car.make || ''} ${car.model || ''}`.trim() || car.name || 'Unknown Car';
               const carPrice = parseFloat(car.daily_rate || car.price || 0);
-              const carImage = car.image_url || car.image || '/default-car-image.jpg';
+              const carImage = car.image_url || '/default-car-image.jpg';
               const carType = car.category_name || car.category || car.type || 'Unknown';
               const carRating = parseFloat(car.rating || 4.0);
               const carFeatures = car.features ? (typeof car.features === 'string' ? car.features.split(',') : car.features) : [];

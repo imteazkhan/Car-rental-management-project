@@ -32,7 +32,7 @@ class CarsAPI extends BaseAPI {
             $max_price = $_GET['max_price'] ?? null;
             $search = $_GET['search'] ?? null;
             
-            $query = "SELECT c.*, cc.name as category_name 
+            $query = "SELECT c.*, cc.name as category_name, c.image_url 
                       FROM cars c 
                       LEFT JOIN car_categories cc ON c.category_id = cc.id 
                       WHERE 1=1";

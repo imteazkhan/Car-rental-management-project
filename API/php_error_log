@@ -1235,3 +1235,100 @@ Stack trace:
 [30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Token: Present
 [30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Received data: {"make":"vw","model":"a5","year":2020,"color":"white","daily_rate":15,"license_plate":"vw12548","vin":"2541","category_id":1,"fuel_type":"diesel","transmission":"manual","seats":4,"mileage":1200,"image_url":"","description":"","features":""}
 [30-Aug-2025 08:12:46 Europe/Berlin] AddCar - Success: Car ID 8
+[31-Aug-2025 05:19:29 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[31-Aug-2025 05:19:30 Europe/Berlin] Token for getAllBookings: Yes
+[31-Aug-2025 05:19:30 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:19:30 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[31-Aug-2025 05:19:30 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[31-Aug-2025 05:19:30 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[31-Aug-2025 05:19:30 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[31-Aug-2025 05:19:30 Europe/Berlin] Token for getAllBookings: Yes
+[31-Aug-2025 05:19:30 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:19:30 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[31-Aug-2025 05:19:30 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[31-Aug-2025 05:19:30 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[31-Aug-2025 05:19:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[31-Aug-2025 05:19:59 Europe/Berlin] Token for getAllBookings: Yes
+[31-Aug-2025 05:19:59 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:19:59 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[31-Aug-2025 05:19:59 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[31-Aug-2025 05:19:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[31-Aug-2025 05:19:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[31-Aug-2025 05:19:59 Europe/Berlin] Token for getAllBookings: Yes
+[31-Aug-2025 05:19:59 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:19:59 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[31-Aug-2025 05:19:59 Europe/Berlin] getAllBookings query executed successfully, found: 3 bookings
+[31-Aug-2025 05:19:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[31-Aug-2025 05:22:00 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[31-Aug-2025 05:22:00 Europe/Berlin] Token received: Yes (length: 20)
+[31-Aug-2025 05:22:00 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:22:00 Europe/Berlin] Authenticated user ID: 5
+[31-Aug-2025 05:22:00 Europe/Berlin] Request data received: {"car_id":8,"start_date":"2025-08-31","end_date":"2025-09-02","total_price":70,"payment_method":"Credit Card"}
+[31-Aug-2025 05:22:00 Europe/Berlin] Sanitized data: {"car_id":"8","start_date":"2025-08-31","end_date":"2025-09-02","total_price":"70","payment_method":"Credit Card"}
+[31-Aug-2025 05:22:00 Europe/Berlin] Validating dates - start: 2025-08-31, end: 2025-09-02
+[31-Aug-2025 05:22:12 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[31-Aug-2025 05:22:12 Europe/Berlin] Token received: Yes (length: 20)
+[31-Aug-2025 05:22:12 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:22:12 Europe/Berlin] Authenticated user ID: 5
+[31-Aug-2025 05:22:12 Europe/Berlin] Request data received: {"car_id":8,"start_date":"2025-08-31","end_date":"2025-09-02","total_price":70,"payment_method":"Credit Card"}
+[31-Aug-2025 05:22:12 Europe/Berlin] Sanitized data: {"car_id":"8","start_date":"2025-08-31","end_date":"2025-09-02","total_price":"70","payment_method":"Credit Card"}
+[31-Aug-2025 05:22:12 Europe/Berlin] Validating dates - start: 2025-08-31, end: 2025-09-02
+[31-Aug-2025 05:22:32 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[31-Aug-2025 05:22:32 Europe/Berlin] Token received: Yes (length: 20)
+[31-Aug-2025 05:22:32 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:22:32 Europe/Berlin] Authenticated user ID: 5
+[31-Aug-2025 05:22:32 Europe/Berlin] Request data received: {"car_id":8,"start_date":"2025-09-05","end_date":"2025-09-02","total_price":85,"payment_method":"Credit Card"}
+[31-Aug-2025 05:22:32 Europe/Berlin] Sanitized data: {"car_id":"8","start_date":"2025-09-05","end_date":"2025-09-02","total_price":"85","payment_method":"Credit Card"}
+[31-Aug-2025 05:22:32 Europe/Berlin] Validating dates - start: 2025-09-05, end: 2025-09-02
+[31-Aug-2025 05:22:52 Europe/Berlin] === CREATE BOOKING DEBUG START ===
+[31-Aug-2025 05:22:52 Europe/Berlin] Token received: Yes (length: 20)
+[31-Aug-2025 05:22:52 Europe/Berlin] Token decoded parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[31-Aug-2025 05:22:52 Europe/Berlin] Authenticated user ID: 5
+[31-Aug-2025 05:22:52 Europe/Berlin] Request data received: {"car_id":8,"start_date":"2025-09-05","end_date":"2025-09-10","total_price":115,"payment_method":"Credit Card"}
+[31-Aug-2025 05:22:52 Europe/Berlin] Sanitized data: {"car_id":"8","start_date":"2025-09-05","end_date":"2025-09-10","total_price":"115","payment_method":"Credit Card"}
+[31-Aug-2025 05:22:52 Europe/Berlin] Validating dates - start: 2025-09-05, end: 2025-09-10
+[31-Aug-2025 05:22:52 Europe/Berlin] Checking car availability for car_id: 8
+[31-Aug-2025 05:22:52 Europe/Berlin] Getting car details for car_id: 8
+[31-Aug-2025 05:22:52 Europe/Berlin] Calculated booking details - days: 5, total_price: 115
+[31-Aug-2025 05:22:52 Europe/Berlin] Creating booking with user_id: 5, car_id: 8
+[31-Aug-2025 05:22:52 Europe/Berlin] Booking created successfully with ID: 4
