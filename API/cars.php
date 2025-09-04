@@ -153,7 +153,7 @@ class CarsAPI extends BaseAPI {
             ]);
         } catch (Exception $e) {
             error_log("Error in getCars: " . $e->getMessage());
-            $this->sendError('গাড়ি ফেচ করতে ব্যর্থ: ' . $e->getMessage(), 500);
+            $this->sendError('Failed to fetch cars: ' . $e->getMessage(), 500);
         }
     }
 
@@ -171,7 +171,7 @@ class CarsAPI extends BaseAPI {
             $stmt->execute();
             
             if ($stmt->rowCount() == 0) {
-                $this->sendError('গাড়ি পাওয়া যায়নি', 404);
+                $this->sendError('Car not found', 404);
             }
             
             $car = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -194,7 +194,7 @@ class CarsAPI extends BaseAPI {
             $this->sendSuccess($car);
         } catch (Exception $e) {
             error_log("Error in getCar: " . $e->getMessage());
-            $this->sendError('গাড়ি ফেচ করতে ব্যর্থ: ' . $e->getMessage(), 500);
+            $this->sendError('Failed to fetch car: ' . $e->getMessage(), 500);
         }
     }
 
@@ -208,7 +208,7 @@ class CarsAPI extends BaseAPI {
             
             if (!$this->verifyToken($token)) {
                 error_log("AddCar - Token verification failed");
-                $this->sendError('অননুমোদিত', 401);
+                $this->sendError('Unauthorized', 401);
             }
             
             $data = $this->getRequestData();
@@ -231,7 +231,7 @@ class CarsAPI extends BaseAPI {
                 $check_stmt->execute();
                 
                 if ($check_stmt->rowCount() > 0) {
-                    $this->sendError('এই লাইসেন্স প্লেটের গাড়ি ইতিমধ্যে বিদ্যমান', 409);
+                    $this->sendError('A car with this license plate already exists', 409);
                 }
             } else {
                 $check_query = "SELECT id FROM cars WHERE license_plate = ?";
@@ -241,7 +241,7 @@ class CarsAPI extends BaseAPI {
                 $result = $check_stmt->get_result();
                 
                 if ($result->num_rows > 0) {
-                    $this->sendError('এই লাইসেন্স প্লেটের গাড়ি ইতিমধ্যে বিদ্যমান', 409);
+                    $this->sendError('A car with this license plate already exists', 409);
                 }
                 $check_stmt->close();
             }
@@ -303,11 +303,11 @@ class CarsAPI extends BaseAPI {
                 if ($stmt->execute()) {
                     $car_id = $this->conn->lastInsertId();
                     error_log("AddCar - Success: Car ID " . $car_id);
-                    $this->sendSuccess(['car_id' => $car_id], 'গাড়ি সফলভাবে যোগ করা হয়েছে');
+                    $this->sendSuccess(['car_id' => $car_id], 'Car added successfully');
                 } else {
                     $errorInfo = $stmt->errorInfo();
                     error_log("AddCar - Database error: " . json_encode($errorInfo));
-                    $this->sendError('গাড়ি যোগ করতে ব্যর্থ: ' . ($errorInfo[2] ?? 'অজানা ডাটাবেস ত্রুটি'), 500);
+                    $this->sendError('Failed to add car: ' . ($errorInfo[2] ?? 'Unknown database error'), 500);
                 }
             } else {
                 // MySQLi version
@@ -347,16 +347,16 @@ class CarsAPI extends BaseAPI {
                 if ($stmt->execute()) {
                     $car_id = $this->conn->insert_id;
                     error_log("AddCar - Success: Car ID " . $car_id);
-                    $this->sendSuccess(['car_id' => $car_id], 'গাড়ি সফলভাবে যোগ করা হয়েছে');
+                    $this->sendSuccess(['car_id' => $car_id], 'Car added successfully');
                 } else {
                     error_log("AddCar - Database error: " . $stmt->error);
-                    $this->sendError('গাড়ি যোগ করতে ব্যর্থ: ' . $stmt->error, 500);
+                    $this->sendError('Failed to add car: ' . $stmt->error, 500);
                 }
                 $stmt->close();
             }
         } catch (Exception $e) {
             error_log("Exception in addCar: " . $e->getMessage());
-            $this->sendError('সার্ভার ত্রুটি: ' . $e->getMessage(), 500);
+            $this->sendError('Server error: ' . $e->getMessage(), 500);
         }
     }
 
@@ -366,7 +366,7 @@ class CarsAPI extends BaseAPI {
             $token = $this->getAuthHeader();
             
             if (!$this->verifyToken($token)) {
-                $this->sendError('অননুমোদিত', 401);
+                $this->sendError('Unauthorized', 401);
             }
             
             $data = $this->getRequestData();
@@ -393,20 +393,20 @@ class CarsAPI extends BaseAPI {
             }
             
             if (empty($fields)) {
-                $this->sendError('আপডেটের জন্য কোনো বৈধ ফিল্ড নেই', 400);
+                $this->sendError('No valid fields provided for update', 400);
             }
             
             $query = "UPDATE cars SET " . implode(', ', $fields) . " WHERE id = :id";
             $stmt = $this->conn->prepare($query);
             
             if ($stmt->execute($params)) {
-                $this->sendSuccess(null, 'গাড়ি সফলভাবে আপডেট করা হয়েছে');
+                $this->sendSuccess(null, 'Car updated successfully');
             } else {
-                $this->sendError('আপডেট ব্যর্থ', 500);
+                $this->sendError('Update failed', 500);
             }
         } catch (Exception $e) {
             error_log("Error in updateCar: " . $e->getMessage());
-            $this->sendError('গাড়ি আপডেট করতে ব্যর্থ: ' . $e->getMessage(), 500);
+            $this->sendError('Failed to update car: ' . $e->getMessage(), 500);
         }
     }
 
@@ -416,7 +416,7 @@ class CarsAPI extends BaseAPI {
             $token = $this->getAuthHeader();
             
             if (!$this->verifyToken($token)) {
-                $this->sendError('অননুমোদিত', 401);
+                $this->sendError('Unauthorized', 401);
             }
             
             // Check if car has active bookings
@@ -427,7 +427,7 @@ class CarsAPI extends BaseAPI {
             $check_stmt->execute();
             
             if ($check_stmt->rowCount() > 0) {
-                $this->sendError('সক্রিয় বুকিং থাকা গাড়ি ডিলিট করা যাবে না', 400);
+                $this->sendError('Cannot delete car with active bookings', 400);
             }
             
             $query = "DELETE FROM cars WHERE id = :id";
@@ -435,13 +435,13 @@ class CarsAPI extends BaseAPI {
             $stmt->bindParam(':id', $car_id, PDO::PARAM_INT);
             
             if ($stmt->execute() && $stmt->rowCount() > 0) {
-                $this->sendSuccess(null, 'গাড়ি সফলভাবে ডিলিট করা হয়েছে');
+                $this->sendSuccess(null, 'Car deleted successfully');
             } else {
-                $this->sendError('গাড়ি পাওয়া যায়নি বা ডিলিট ব্যর্থ', 404);
+                $this->sendError('Car not found or deletion failed', 404);
             }
         } catch (Exception $e) {
             error_log("Error in deleteCar: " . $e->getMessage());
-            $this->sendError('গাড়ি ডিলিট করতে ব্যর্থ: ' . $e->getMessage(), 500);
+            $this->sendError('Failed to delete car: ' . $e->getMessage(), 500);
         }
     }
 
@@ -467,7 +467,7 @@ class CarsAPI extends BaseAPI {
             $this->sendSuccess($categories);
         } catch (Exception $e) {
             error_log("Error in getCategories: " . $e->getMessage());
-            $this->sendError('ক্যাটাগরি ফেচ করতে ব্যর্থ: ' . $e->getMessage(), 500);
+            $this->sendError('Failed to fetch categories: ' . $e->getMessage(), 500);
         }
     }
 }
@@ -485,7 +485,7 @@ try {
                         break;
                     default:
                         http_response_code(404);
-                        echo json_encode(['success' => false, 'error' => 'অ্যাকশন পাওয়া যায়নি']);
+                        echo json_encode(['success' => false, 'error' => 'Action not found']);
                         exit;
                 }
             } elseif (isset($_GET['id'])) {
@@ -504,7 +504,7 @@ try {
                 $cars->updateCar($_GET['id']);
             } else {
                 http_response_code(400);
-                echo json_encode(['success' => false, 'error' => 'গাড়ির আইডি প্রয়োজন']);
+                echo json_encode(['success' => false, 'error' => 'Car ID required']);
                 exit;
             }
             break;
@@ -514,14 +514,14 @@ try {
                 $cars->deleteCar($_GET['id']);
             } else {
                 http_response_code(400);
-                echo json_encode(['success' => false, 'error' => 'গাড়ির আইডি প্রয়োজন']);
+                echo json_encode(['success' => false, 'error' => 'Car ID required']);
                 exit;
             }
             break;
             
         default:
             http_response_code(405);
-            echo json_encode(['success' => false, 'error' => 'মেথড অনুমোদিত নয়']);
+            echo json_encode(['success' => false, 'error' => 'Method not allowed']);
             exit;
     }
 } catch (Exception $e) {
@@ -529,7 +529,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => 'ইন্টারনাল সার্ভার ত্রুটি',
+        'error' => 'Internal server error',
         'message' => $e->getMessage()
     ]);
     exit;
@@ -538,7 +538,7 @@ try {
     http_response_code(500);
     echo json_encode([
         'success' => false,
-        'error' => 'ফেটাল সার্ভার ত্রুটি',
+        'error' => 'Fatal server error',
         'message' => $e->getMessage()
     ]);
     exit;

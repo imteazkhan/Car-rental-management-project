@@ -1332,3 +1332,40 @@ Stack trace:
 [31-Aug-2025 05:22:52 Europe/Berlin] Calculated booking details - days: 5, total_price: 115
 [31-Aug-2025 05:22:52 Europe/Berlin] Creating booking with user_id: 5, car_id: 8
 [31-Aug-2025 05:22:52 Europe/Berlin] Booking created successfully with ID: 4
+[01-Sep-2025 16:01:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[01-Sep-2025 16:01:59 Europe/Berlin] Token for getAllBookings: Yes
+[01-Sep-2025 16:01:59 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[01-Sep-2025 16:01:59 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[01-Sep-2025 16:01:59 Europe/Berlin] getAllBookings query executed successfully, found: 4 bookings
+[01-Sep-2025 16:01:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[01-Sep-2025 16:01:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG START ===
+[01-Sep-2025 16:01:59 Europe/Berlin] Token for getAllBookings: Yes
+[01-Sep-2025 16:01:59 Europe/Berlin] getAllBookings token parts: Array
+(
+    [0] => 5
+    [1] => ab@gmail.com
+)
+
+[01-Sep-2025 16:01:59 Europe/Berlin] Admin accessing all bookings with user_id: 5
+[01-Sep-2025 16:01:59 Europe/Berlin] getAllBookings query executed successfully, found: 4 bookings
+[01-Sep-2025 16:01:59 Europe/Berlin] === GET ALL BOOKINGS DEBUG END ===
+[01-Sep-2025 16:16:20 Europe/Berlin] AddCar - Token: Present
+[01-Sep-2025 16:16:20 Europe/Berlin] AddCar - Received data: {"make":"Honda","model":"cev","year":2022,"color":"white","daily_rate":12,"license_plate":"Honda1212","vin":"2121","category_id":6,"fuel_type":"hybrid","transmission":"automatic","seats":5,"mileage":1100,"image_url":"http:\/\/localhost\/car-rental-management-project\/API\/car-image\/honda001.jpg","description":"","features":["AC","GPS","Seat Heater"]}
+[01-Sep-2025 16:16:20 Europe/Berlin] AddCar - Success: Car ID 9
+[01-Sep-2025 16:18:39 Europe/Berlin] AddCar - Token: Present
+[01-Sep-2025 16:18:39 Europe/Berlin] AddCar - Received data: {"make":"Honda","model":"civic","year":2023,"color":"Gray","daily_rate":12,"license_plate":"Honda1144","vin":"1219","category_id":2,"fuel_type":"hybrid","transmission":"automatic","seats":5,"mileage":2099,"image_url":"http:\/\/localhost\/car-rental-management-project\/API\/car-image\/honda002.jpg","description":"","features":["AC","GPS","Seat Heater"]}
+[01-Sep-2025 16:18:39 Europe/Berlin] AddCar - Success: Car ID 10
+[01-Sep-2025 16:21:11 Europe/Berlin] AddCar - Token: Present
+[01-Sep-2025 16:21:11 Europe/Berlin] AddCar - Received data: {"make":"NIO","model":"EL06","year":2025,"color":"white","daily_rate":15,"license_plate":"Nio2255","vin":"9875","category_id":5,"fuel_type":"electric","transmission":"automatic","seats":4,"mileage":1011,"image_url":"http:\/\/localhost\/car-rental-management-project\/API\/car-image\/NIO_EL6-01.jpg","description":"","features":["AC","GPS","Seat Heater","Back camera"]}
+[01-Sep-2025 16:21:11 Europe/Berlin] AddCar - Success: Car ID 11
+[01-Sep-2025 16:23:09 Europe/Berlin] AddCar - Token: Present
+[01-Sep-2025 16:23:09 Europe/Berlin] AddCar - Received data: {"make":"NIO","model":"ET5","year":2025,"color":"Yellow","daily_rate":25,"license_plate":"Nio2299","vin":"1589","category_id":5,"fuel_type":"electric","transmission":"automatic","seats":4,"mileage":652,"image_url":"http:\/\/localhost\/car-rental-management-project\/API\/car-image\/NIO_ET5.jpg","description":"","features":["AC","GPS","Camera","Seat Heater"]}
+[01-Sep-2025 16:23:09 Europe/Berlin] AddCar - Success: Car ID 12
+[02-Sep-2025 19:57:41 Europe/Berlin] AddCar - Token: Present
+[02-Sep-2025 19:57:41 Europe/Berlin] AddCar - Received data: {"make":"Tesla","model":"Y","year":2025,"color":"Gray","daily_rate":15,"license_plate":"tes114","vin":"451","category_id":2,"fuel_type":"electric","transmission":"automatic","seats":4,"mileage":1200,"image_url":"http:\/\/localhost\/car-rental-management-project\/API\/car-image\/tesla01.jpg","description":"","features":["AC","GPS","Camera","Self-Driving"]}
+[02-Sep-2025 19:57:41 Europe/Berlin] AddCar - Success: Car ID 13
