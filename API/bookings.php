@@ -541,7 +541,7 @@ class BookingsAPI extends BaseAPI {
             $payment = null;
             try {
                 if ($this->use_pdo) {
-                    $payment_query = "SELECT payment_id, amount, payment_date, payment_method, transaction_id, status
+                    $payment_query = "SELECT id, amount, payment_date, payment_method, transaction_id, status
                                       FROM payments
                                       WHERE booking_id = :booking_id";
                     $payment_stmt = $this->conn->prepare($payment_query);
@@ -549,7 +549,7 @@ class BookingsAPI extends BaseAPI {
                     $payment_stmt->execute();
                     $payment = $payment_stmt->fetch(PDO::FETCH_ASSOC);
                 } else {
-                    $payment_query = "SELECT payment_id, amount, payment_date, payment_method, transaction_id, status
+                    $payment_query = "SELECT id, amount, payment_date, payment_method, transaction_id, status
                                       FROM payments
                                       WHERE booking_id = ?";
                     $payment_stmt = $this->conn->prepare($payment_query);
@@ -599,20 +599,20 @@ class BookingsAPI extends BaseAPI {
             $this->sendError('Invalid status', 400);
         }
         
-        $query = "UPDATE bookings SET booking_status = :booking_status WHERE booking_id = :booking_id";
+        $query = "UPDATE bookings SET status = :status WHERE id = :booking_id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':booking_status', $data['status']);
+        $stmt->bindParam(':status', $data['status']);
         $stmt->bindParam(':booking_id', $id);
         
         if ($stmt->execute() && $stmt->rowCount() > 0) {
             // Update car status based on booking status
             if ($data['status'] === 'active') {
-                $car_update = "UPDATE cars SET car_status = 'rented' WHERE id = (SELECT car_id FROM bookings WHERE booking_id = :booking_id)";
+                $car_update = "UPDATE cars SET status = 'rented' WHERE id = (SELECT car_id FROM bookings WHERE id = :booking_id)";
                 $car_stmt = $this->conn->prepare($car_update);
                 $car_stmt->bindParam(':booking_id', $id);
                 $car_stmt->execute();
             } elseif (in_array($data['status'], ['completed', 'cancelled'])) {
-                $car_update = "UPDATE cars SET car_status = 'available' WHERE id = (SELECT car_id FROM bookings WHERE booking_id = :booking_id)";
+                $car_update = "UPDATE cars SET status = 'available' WHERE id = (SELECT car_id FROM bookings WHERE id = :booking_id)";
                 $car_stmt = $this->conn->prepare($car_update);
                 $car_stmt->bindParam(':booking_id', $id);
                 $car_stmt->execute();
@@ -642,7 +642,7 @@ class BookingsAPI extends BaseAPI {
         
         // Check if booking belongs to user and can be cancelled
         if ($this->use_pdo) {
-            $query = "SELECT booking_status, start_date FROM bookings WHERE booking_id = :booking_id AND user_id = :user_id";
+            $query = "SELECT status, start_date FROM bookings WHERE id = :booking_id AND user_id = :user_id";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':booking_id', $id);
             $stmt->bindParam(':user_id', $user_id);
@@ -654,7 +654,7 @@ class BookingsAPI extends BaseAPI {
             
             $booking = $stmt->fetch(PDO::FETCH_ASSOC);
         } else {
-            $query = "SELECT booking_status, start_date FROM bookings WHERE booking_id = ? AND user_id = ?";
+            $query = "SELECT status, start_date FROM bookings WHERE id = ? AND user_id = ?";
             $stmt = $this->conn->prepare($query);
             $stmt->bind_param('ii', $id, $user_id);
             $stmt->execute();
@@ -667,7 +667,7 @@ class BookingsAPI extends BaseAPI {
             $booking = $result->fetch_assoc();
         }
         
-        if (in_array($booking['booking_status'], ['completed', 'cancelled'])) {
+        if (in_array($booking['status'], ['completed', 'cancelled'])) {
             $this->sendError('Cannot cancel this booking', 400);
         }
         
@@ -682,7 +682,7 @@ class BookingsAPI extends BaseAPI {
         
         // Update booking status
         if ($this->use_pdo) {
-            $update_query = "UPDATE bookings SET booking_status = 'cancelled' WHERE booking_id = :booking_id";
+            $update_query = "UPDATE bookings SET status = 'cancelled' WHERE id = :booking_id";
             $update_stmt = $this->conn->prepare($update_query);
             $update_stmt->bindParam(':booking_id', $id);
             
@@ -692,7 +692,7 @@ class BookingsAPI extends BaseAPI {
                 $this->sendError('Failed to cancel booking', 500);
             }
         } else {
-            $update_query = "UPDATE bookings SET booking_status = 'cancelled' WHERE booking_id = ?";
+            $update_query = "UPDATE bookings SET status = 'cancelled' WHERE id = ?";
             $update_stmt = $this->conn->prepare($update_query);
             $update_stmt->bind_param('i', $id);
             
@@ -712,12 +712,12 @@ class BookingsAPI extends BaseAPI {
             $this->sendError('Unauthorized', 401);
         }
         
-        $query = "SELECT b.booking_id, b.user_id, b.car_id, b.start_date, b.end_date, b.total_price, b.booking_status, b.created_at, c.car_name, c.car_model, c.car_image, c.car_rent_price, c.car_fuel_type, c.car_transmission, c.car_seats, 
+        $query = "SELECT b.id as booking_id, b.user_id, b.car_id, b.start_date, b.end_date, b.total_amount as total_price, b.status as booking_status, b.created_at, c.make as car_name, c.model as car_model, c.image_url as car_image, c.daily_rate as car_rent_price, c.fuel_type as car_fuel_type, c.transmission as car_transmission, c.seats as car_seats, 
                   u.username, u.email, u.phone 
                   FROM bookings b 
                   JOIN cars c ON b.car_id = c.id 
                   JOIN users u ON b.user_id = u.id 
-                  WHERE b.booking_id = :booking_id";
+                  WHERE b.id = :booking_id";
         
         $stmt = $this->conn->prepare($query);
         $stmt->bindParam(':booking_id', $id);

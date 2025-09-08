@@ -2,9 +2,9 @@
 // Database configuration
 class Database {
     private $host = "localhost";
-    private $db_name = "car_rental";
-    private $username = "root";
-    private $password = "";
+    private $db_name = "coders64_car_rental";
+    private $username = "coders64_common";
+    private $password = "123Common456";
     public $conn;
 
     // Get database connection

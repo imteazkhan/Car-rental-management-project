@@ -163,7 +163,7 @@ function Register() {
                 name="phone"
                 value={formData.phone}
                 onChange={handleInputChange}
-                placeholder="(555) 123-4567"
+                placeholder="+880 1234567890"
                 className={errors.phone ? 'error' : ''}
               />
               {errors.phone && <span className="error-message">{errors.phone}</span>}

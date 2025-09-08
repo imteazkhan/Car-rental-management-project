@@ -39,7 +39,7 @@ function App() {
   return (
     <NotificationProvider>
       <AuthProvider>
-        <Router>
+        <Router basename="/imteaz/car-rental">
           <div className="App">
             <Navbar />
             <main>

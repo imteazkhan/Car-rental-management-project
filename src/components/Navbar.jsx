@@ -46,9 +46,12 @@ function Navbar() {
           <img src={menuOpen ? close_icon : menu_icon} alt="menu icon" />
         </div>
         <div className={`nav-menu ${menuOpen ? 'active' : ''}`}>
-          <a href="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</a>
+          <Link to="/" className="nav-link" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/cars" className="nav-link" onClick={() => setMenuOpen(false)}>Cars</Link>
-          <Link to="/my-bookings" className="nav-link" onClick={() => setMenuOpen(false)}>My Bookings</Link>
+          {user && user.role === 'user' && (
+            <link to="/my-bookings" className='nav-link' onClick={() => setMenuOpen(false)}>My Bookings</link>
+            )}
+          {/* <Link to="/my-bookings" className="nav-link" onClick={() => setMenuOpen(false)}>My Bookings</Link> */}
           <Link to="/list-your-car" className="nav-link" onClick={() => setMenuOpen(false)}>List My Car</Link>
           {user && user.role === 'admin' && (
             <Link to="/admin/dashboard" className="nav-link" onClick={() => setMenuOpen(false)}>Admin Dashboard</Link>
